@@ -1,0 +1,21 @@
+{
+  "restartable": "rs",
+  "verbose": false,
+  "env": {
+    "NODE_ENV": "dev",
+    "PORT": "3004"
+  },
+  "exec": "node --inspect=0.0.0.0:9229 mock/index.js",
+  "watch": [
+    "nodemon.json",
+    "mock/"
+  ],
+  "ignore": [
+    "src/**/*.spec.js",
+    ".git",
+    ".idea",
+    "node_modules",
+    "logs"
+  ],
+  "ext": "js"
+}

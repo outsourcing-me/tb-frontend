@@ -1,0 +1,36 @@
+$badge-width: 18px;
+@mixin badge {
+  border-radius: 50%;
+  width: $badge-width;
+  height: $badge-width;
+  font-size: 10px;
+  display: block;
+  line-height: $badge-width;
+  text-align: center;
+}
+
+.badge-top {
+  position: absolute;
+  top: -$badge-width/2;
+  right: -$badge-width/2;
+}
+
+.badge-blue {
+  @include badge;
+  background: $el-blue;
+}
+
+.badge-green {
+  @include badge;
+  background: $el-green;
+}
+
+.badge-red {
+  @include badge;
+  background: $el-red;
+}
+
+.badge-orange {
+  @include badge;
+  background: $el-orange;
+}

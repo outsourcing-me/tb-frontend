@@ -1,0 +1,14 @@
+@keyframes sonarEffect {
+  0% {
+    opacity: 0.3;
+  }
+  40% {
+    opacity: 0.5;
+    box-shadow: 0 0 0 2px rgba(93, 106, 131, 0.1), 0 0 10px 10px #f6f8fc, 0 0 0 10px rgba(93, 106, 131, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 2px rgba(93, 106, 131, 0.1), 0 0 10px 10px #f6f8fc, 0 0 0 10px rgba(93, 106, 131, 0.5);
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}

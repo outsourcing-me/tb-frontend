@@ -1,0 +1,115 @@
+.button {
+  background: url('~assets/images/buttons-retina.png') no-repeat top left;
+  background-size: 300px 1196px;
+  display: inline-block;
+  font-family: 'ComicSansMs';
+  font-weight: bold;
+
+  &.button_Withdrawal {
+    background-position: 0 0;
+    width: 170px;
+    height: 56px;
+    &:active {
+      background-position: 0 -57px;
+    }
+  }
+  &.Coins {
+    background-position: 0 -113px;
+    width: 107px;
+    height: 40px;
+  }
+  &.first {
+    background-position: 0 -154px;
+    width: 29px;
+    height: 29px;
+  }
+
+  &.ic_start_game_bg {
+    background-position: 0 -256px;
+    width: 190px;
+    height: 71px;
+    &.disabled {
+      background-position: 0 -184px;
+    }
+    &:active {
+      background-position: 0 -328px;
+    }
+  }
+
+  &.ic_start_game_bonus_ime {
+    background-position: 0 -400px;
+    width: 300px;
+    height: 72px;
+  }
+  &.ic_start_game_Coin_con {
+    background-position: 0 -474px;
+    width: 23px;
+    height: 16px;
+  }
+  &.ic_start_game_Coin_con2 {
+    background-position: 0 -490px;
+    width: 23px;
+    height: 16px;
+  }
+  &.ic_start_game_coin {
+    background-position: 0 -507px;
+    width: 153px;
+    height: 64px;
+  }
+  &.ic_start_game_cool {
+    background-position: 0 -572px;
+    width: 152px;
+    height: 75px;
+  }
+  &.ic_start_game_countdown1 {
+    background-position: 0 -648px;
+    width: 100px;
+    height: 55px;
+  }
+  &.ic_start_game_my {
+    background-position: 0 -704px;
+    width: 143px;
+    height: 44px;
+  }
+  &.ic_start_game_triple_oin {
+    background-position: 0 -748px;
+    width: 299px;
+    height: 78px;
+  }
+  &.ic_status_icon {
+    background-position: 0 -827px;
+    width: 57px;
+    height: 31px;
+    &.service {
+      background-position: 0 -891px;
+    }
+    &.idle {
+      background-position: 0 -859px;
+    }
+  }
+  &.ic_title_coins {
+    background-position: 0 -923px;
+    width: 107px;
+    height: 41px;
+  }
+  &.nothing {
+    background-position: 0 -965px;
+    width: 167px;
+    height: 57px;
+  }
+  &.Ribbon_con {
+    background-position: 0 -1023px;
+    width: 212px;
+    height: 53px;
+  }
+  &.Ribbon_pro {
+    background-position: 0 -1077px;
+    width: 212px;
+    height: 53px;
+  }
+  &.win {
+    background-position: 0 -1131px;
+    width: 136px;
+    height: 64px;
+  }
+}

@@ -1,0 +1,202 @@
+@import "~assets/scss/_variables.scss";
+$topbar-height: 50px;
+$bottombar-height: 45px;
+.writingDiv {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  color: $primary-font-color;
+  font-size: $font-size-m;
+  &.no-header {
+    .topBar {
+      top: 0;
+    }
+    .paperCanvas {
+      top: $topbar-height;
+    }
+  }
+  .topBar,
+  .bottomBar {
+    position: absolute;
+    height: $topbar-height;
+    background: snow;
+    left: 0;
+    right: 0;
+  }
+  .topBar {
+    display: flex;
+    top: $header-height;
+    z-index: 99;
+    padding: 0 20px;
+    align-items: center;
+    label {
+      flex: 1;
+      text-align: left;
+      line-height: $topbar-height;
+    }
+  }
+  .bottomBar {
+    height: $bottombar-height;
+    bottom: 0;
+    width: 100%;
+    clear: both;
+  }
+  .paperCanvas {
+    position: absolute;
+    left: 0;
+    bottom: $bottombar-height;
+    top: $header-height + $topbar-height; // background: url(~assets/images/bg_paper.jpg);
+    background-color: $primary-bg-color;
+    width: 100%;
+  }
+  .ePaperCanvas {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: block;
+  }
+  .textButton {
+    padding: 0 10px;
+    height: 28px;
+    line-height: 27px;
+    color: $font-color-em;
+    font-size: $font-size-xs;
+    background: transparent;
+    display: inline-block;
+    border: 0;
+    text-align: center;
+    position: relative;
+    margin-left: 10px;
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 200%;
+      height: 200%;
+      transform-origin: 0 0;
+      transform: scale(0.5);
+      border: 1px solid $font-color-em;
+    }
+  }
+  .textButton_Done {
+    height: 45px;
+    line-height: 45px;
+    background: $primary-color;
+    border-radius: 2px;
+    width: 256px;
+    position: absolute;
+    border: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    bottom: $bottombar-height + 10px;
+  }
+  .bottomCol {
+    display: block;
+    float: left;
+    width: 20%;
+    height: 28px;
+    margin-top: 7px;
+  }
+  .bottomButton {
+    background: transparent;
+    align-self: center;
+    width: 28px;
+    height: 28px;
+    display: block;
+    background-size: 28px;
+    border: none;
+    margin: auto;
+    top: 10px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .redo {
+    background: url(~assets/images/next.png) no-repeat;
+    background-size: 28px;
+    border: none;
+    top: 10px;
+  }
+  .redo:active {
+    background: url(~assets/images/next_press.png) no-repeat;
+    background-size: 28px;
+  }
+  .undo {
+    background: url(~assets/images/previous.png) no-repeat;
+    background-size: 28px;
+  }
+  .undo:active {
+    background: url(~assets/images/previous_press.png) no-repeat;
+    background-size: 28px;
+  }
+  .clear {
+    background: url(~assets/images/clear.png) no-repeat;
+    background-size: 28px;
+    top: 10px;
+  } // .clear:active {
+  //   background: url(~assets/images/clear_press.png) no-repeat;
+  //   background-size: 28px;
+  // }
+  .color {
+    background: url(~assets/images/color.png) no-repeat;
+    background-size: 28px;
+  } // .color:active {
+  //   background: url(~assets/images/color_press.png) no-repeat;
+  //   background-size: 28px;
+  // }
+  .stroke {
+    background: url(~assets/images/stroke.png) no-repeat;
+    background-size: 28px;
+  } // .stroke:active {
+  //   background: url(~assets/images/stroke_press.png) no-repeat;
+  //   background-size: 28px;
+  // }
+  .palette {
+    border-bottom: 1px solid #82593e;
+    margin: auto;
+    position: absolute;
+    bottom: 44px;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    display: none;
+    z-index: 20;
+    background: #fff;
+    left: 0;
+  }
+  .palette li {
+    float: left;
+    line-height: 44px;
+    font-size: 0.75em;
+    padding: 0;
+    color: #fff;
+    width: 20%;
+    text-align: center;
+    display: inline;
+  }
+  .penSize {
+    border-bottom: 1px solid #82593e;
+    margin: auto;
+    position: absolute;
+    bottom: 44px;
+    width: 100%;
+    list-style: none;
+    background: #fff;
+    z-index: 20;
+    display: none;
+    padding: 0em 0px 0px 0px;
+    left: 0;
+  }
+  .penSize li {
+    float: left;
+    font-size: 0.6em;
+    width: 20%;
+  }
+  .penSize li input {
+    float: left;
+    margin-top: 16px;
+  }
+}

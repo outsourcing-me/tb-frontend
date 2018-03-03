@@ -1,0 +1,99 @@
+form,
+.form {
+  .fields-header {
+    line-height: 1.8em;
+    font-size: $font-size-m;
+    color: $font-color-em; // color: #00a5e0;
+    padding: 7px 15px;
+    .iconfont {
+      margin-right: 5px;
+    }
+    p {
+      font-size: $font-size-xs;
+      color: $minor-font-color;
+    }
+    small {
+      color: black;
+      display: inline-block;
+      color: $minor-font-color; // padding-left: 5px; // line-height: 1.6;
+      // margin-left: 5px;
+    }
+  }
+  &.simple-form {
+    input::-moz-placeholder {
+      font-size: $font-size-m!important;
+    }
+
+    input:-ms-input-placeholder {
+      font-size: $font-size-m!important;
+    }
+
+    input::-webkit-input-placeholder {
+      font-size: $font-size-m!important;
+    }
+    .fields-header {
+      h3 {
+        font-size: $font-size-xxl;
+        margin: 20px 0;
+      }
+      small {
+        display: block;
+        color: $primary-font-color;
+        line-height: 1.6em;
+        margin: 20px 0;
+        font-size: $font-size-m;
+      }
+    }
+    .mint-cell {
+      background: #f6f6f6;
+      margin: 0 15px 18px;
+    }
+    .mint-field-core {
+      background: none;
+    }
+    .mint-field-other {
+      .mint-button {
+        margin-right: -7px;
+        margin-left: 5px;
+        height: 30px;
+        font-size: $font-size-m;
+        min-width: 90px;
+        small {
+          font-size: inherit;
+        }
+        &:before {
+          border-width: 0 0 0 1px;
+          border-color: #939393;
+        }
+      }
+    }
+    .form-buttons {
+      margin-top: 30px;
+    }
+  }
+  .note-line {
+    padding: 15px;
+    color: $minor-font-color;
+  }
+  .footer-tips {
+    // @include font-size-xxxs();
+    font-size: $font-size-xxxs;
+    padding: 0 15px;
+    color: #999;
+    h4 {
+      margin: 5px 0;
+    }
+  }
+}
+
+.form-buttons {
+  padding: 20px 15px;
+  &.fixed {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    background: white;
+  }
+}

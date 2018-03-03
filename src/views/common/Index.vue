@@ -1,0 +1,156 @@
+<template lang="pug">
+  section.index
+    tb-header(:title="$t('common.title.index')", ref="header")
+      .icon.ic_title_my.mlr10(slot="left", @click="$router.push({name: 'mine'})")
+      .flex.mrr10(slot="right")
+        .icon.ic_game_Message.mrr5
+        .icon.ic_title_Sound_off
+    .body.overflow-scroll(ref="body")
+      .banner(:style="bannerStyle", disable-swipe)
+        .button.Coins
+          span 99999
+        mt-swipe(:show-indicators="true", :auto="4000")
+          mt-swipe-item
+            img.banner-img(src="~assets/images/banner1@3x.png")
+          mt-swipe-item
+            img.banner-img(src="~assets/images/banner1@3x.png")
+          mt-swipe-item
+            img.banner-img(src="~assets/images/banner1@3x.png")
+      .room-list
+        .room-card(v-for="n in 5")
+          .inner
+            .pic
+              img(src="~assets/images/home_Show_1@3x.png")
+              .status.button.ic_status_icon.idle idle
+            .pic-desc
+              h3 Clown down Push 1111111
+              .note.flex
+                .flex-item.flex2 8 coins/ time
+                .flex-item.text-right
+                  .icon.ic_status_icon_eye.mr5
+                  | 88
+
+</template>
+
+<script>
+import { mapGetters } from 'vuex'
+
+export default {
+  created() {
+    this.bannerStyle = {
+      height: (window.innerWidth / 1125 * 480) + 'px' // 1125 width 480 height
+    }
+  },
+
+  mounted() {
+    const { body, header } = this.$refs
+    this.updateContainerHeight(body, header.$el)
+  },
+
+  methods: {
+
+  },
+
+  computed: {
+    ...mapGetters(['user'])
+  },
+
+  data() {
+    return {
+      bannerStyle: {},
+      selectedProduct: '',
+      products: []
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.banner {
+  height: 160px;
+  position: relative;
+}
+
+.Coins {
+  color: white;
+  position: absolute;
+  font-family: 'ComicSansMs';
+  right: 0;
+  top: 14px;
+  z-index: 9;
+  span {
+    display: inline-block;
+    width: 50px;
+    margin-left: 44px;
+    margin-top: 9px;
+    text-align: center;
+  }
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
+}
+
+.room-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  flex-wrap: wrap;
+}
+
+.room-card {
+  width: 50%;
+  .inner {
+    border-radius: 4px;
+    margin: 8px;
+    overflow: hidden;
+    box-shadow: 0px 3px 6px rgba(204, 204, 204, 0.3);
+    &:active {
+      opacity: 0.9;
+    }
+  }
+  .pic {
+    width: 100%;
+    padding-bottom: 100%;
+    position: relative;
+  }
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+  .status {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'ComicSansMs';
+    line-height: 26px;
+    text-indent: 7px;
+    color: white;
+  }
+  .pic-desc {
+    padding: 10px 10px 7px;
+    font-size: $font-size-m;
+    h3 {
+      font-weight: normal;
+      font-size: $font-size-l;
+      margin-bottom: 7px;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .note {
+      color: $minor-font-color;
+    }
+  }
+}
+
+
+</style>

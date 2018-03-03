@@ -1,0 +1,45 @@
+.box-border {
+  position: relative;
+  &:after {
+    position: absolute;
+    content: '';
+    left: 0;
+    top: 0;
+    width: 199.6%;
+    height: 199.6%;
+    transform: scale(0.5);
+    transform-origin: 0 0;
+    border: 1px solid $border-color;
+    pointer-events: none;
+  }
+  &.box-border-t {
+    &:after {
+      border-width: 1px 0 0 0;
+    }
+  }
+  &.box-border-r {
+    &:after {
+      border-width: 0 1px 0 0;
+    }
+  }
+  &.box-border-b {
+    &:after {
+      border-width: 0 0 1px 0;
+    }
+  }
+  &.box-border-l {
+    &:after {
+      border-width: 0 0 0 1px;
+    }
+  }
+  &.box-border-tb {
+    &:after {
+      border-width: 1px 0 1px 0;
+    }
+  }
+  &.box-border-rb {
+    &:after {
+      border-width: 0 1px 1px 0;
+    }
+  }
+}

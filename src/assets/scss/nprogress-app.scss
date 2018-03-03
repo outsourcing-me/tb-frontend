@@ -1,0 +1,10 @@
+@import "~assets/scss/_variables.scss";
+#nprogress .bar {
+  position: absolute;
+  top: $header-height!important;
+}
+
+#nprogress .peg {
+  box-shadow: none;
+  display: none;
+}
