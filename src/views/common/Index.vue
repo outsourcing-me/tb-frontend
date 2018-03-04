@@ -1,10 +1,11 @@
 <template lang="pug">
   section.index
     tb-header(:title="$t('common.title.index')", ref="header")
-      .icon.ic_title_my.mlr10(slot="left", @click="$router.push({name: 'mine'})")
-      .flex.mrr10(slot="right")
+      .icon.ic_title_my.mlr10.mt5(slot="left", @click="$router.push({name: 'mine'})")
+      .flex.mrr10.mt5(slot="right")
         .icon.ic_game_Message.mrr5
-        .icon.ic_title_Sound_off
+        .icon.ic_title_Sound_off(v-if="soundOn", @click="toggleSound('off')")
+        .icon.ic_title_Sound_on(v-else, @click="toggleSound('on')")
     .body.overflow-scroll(ref="body")
       .banner(:style="bannerStyle", disable-swipe)
         .button.Coins
@@ -16,16 +17,17 @@
             img.banner-img(src="~assets/images/banner1@3x.png")
           mt-swipe-item
             img.banner-img(src="~assets/images/banner1@3x.png")
+      tb-empty(v-if="!roomList.length")
       .room-list
-        .room-card(v-for="n in 5")
+        .room-card(v-for="room in roomList", :key="room.roomid", @click="enterRoom(room)")
           .inner
             .pic
-              img(src="~assets/images/home_Show_1@3x.png")
-              .status.button.ic_status_icon.idle idle
+              img(:src="room.pic")
+              .status.button.ic_status_icon(:class="room.status").idle {{room.status}}
             .pic-desc
-              h3 Clown down Push 1111111
+              h3 {{room.name}}
               .note.flex
-                .flex-item.flex2 8 coins/ time
+                .flex-item.flex2 {{room.price}} {{$t('common.index.priceUnit')}}
                 .flex-item.text-right
                   .icon.ic_status_icon_eye.mr5
                   | 88
@@ -48,7 +50,16 @@ export default {
   },
 
   methods: {
-
+    toggleSound(action) {
+      console.log(action)
+      this.soundOn = action === 'on'
+    },
+    enterRoom(room) {
+      this.$router.push({
+        name: 'game',
+        params: { id: room.roomid }
+      })
+    }
   },
 
   computed: {
@@ -57,6 +68,29 @@ export default {
 
   data() {
     return {
+      soundOn: false,
+      roomList: [{
+        'roomid': '1',
+        'name': 'Clown coin push',
+        'desc': '',
+        'price': '20',
+        'pic': 'http://cdn.coolguang.com/public/wawaji/new1/mobile/kuaisufabu001.jpg',
+        status: 'idle'
+      }, {
+        'roomid': '2',
+        'name': '1',
+        'desc': '',
+        'price': '30',
+        'pic': 'http://cdn.coolguang.com/public/wawaji/new1/mobile/kuaisufabu001.jpg',
+        status: 'busy'
+      }, {
+        'roomid': '3',
+        'name': '1',
+        'desc': '',
+        'price': '50',
+        'pic': 'http://cdn.coolguang.com/public/wawaji/new1/mobile/kuaisufabu001.jpg',
+        status: 'busy'
+      }],
       bannerStyle: {},
       selectedProduct: '',
       products: []
@@ -151,6 +185,4 @@ export default {
     }
   }
 }
-
-
 </style>

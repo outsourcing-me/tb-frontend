@@ -1,6 +1,7 @@
 export default {
   layout: {
-    backButtonText: 'back'
+    backButtonText: 'back',
+    noMoreData: 'No more data!'
   },
   // 以下通用模块
   validator: {

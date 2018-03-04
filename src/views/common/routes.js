@@ -12,6 +12,14 @@ export default [{
     headerShow: true
   }
 }, {
+  path: '/h5/game/:id',
+  name: 'game',
+  component: resolve => require(['@/views/common/Game.vue'], resolve),
+  meta: {
+    title: i18n.t('common.title.game'),
+    headerShow: true
+  }
+}, {
   path: '*',
   redirect: '/'
 }]

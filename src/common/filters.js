@@ -4,7 +4,7 @@ import numeral from 'numeral'
 
 export default {
   install(Vue, options) {
-    Vue.filter('fbCurrency', (value, prefix = '￥', suffix = '') => {
+    Vue.filter('tbCurrency', (value, prefix = '￥', suffix = '') => {
       if (isNumber(value)) {
         return prefix + numeral(round(value, 2)).format('0,0.00') + suffix
       } else {
@@ -12,34 +12,34 @@ export default {
       }
     })
 
-    Vue.filter('fbPercent', (value, decimal = 2, multi = 100, unit = '%') => {
+    Vue.filter('tbPercent', (value, decimal = 2, multi = 100, unit = '%') => {
       return isNumber(value) ? round(value * multi, decimal).toFixed(decimal) + (unit || '') : ''
     })
 
-    Vue.filter('fbRound', (value, decimal = 0) => {
+    Vue.filter('tbRound', (value, decimal = 0) => {
       return round(value, decimal).toFixed(2)
     })
 
-    Vue.filter('fbAppend', (value, str) => {
+    Vue.filter('tbAppend', (value, str) => {
       return (isNil(value) ? '' : value) + str
     })
 
-    Vue.filter('fbPrepend', (value, str) => {
+    Vue.filter('tbPrepend', (value, str) => {
       return str + (isNil(value) ? '' : value)
     })
 
-    Vue.filter('fbPositveNumber', (value) => {
+    Vue.filter('tbPositveNumber', (value) => {
       if (value > 0 && isNumber(value)) {
         return '+' + value
       }
       return value
     })
 
-    Vue.filter('fbNull', (value, str) => {
+    Vue.filter('tbNull', (value, str) => {
       return isNull(value) ? '-' : (str || value)
     })
 
-    Vue.filter('fbFalse', (value, str) => {
+    Vue.filter('tbFalse', (value, str) => {
       return !value ? '-' : (str || value)
     })
 

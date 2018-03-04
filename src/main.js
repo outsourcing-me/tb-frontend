@@ -9,6 +9,7 @@ import '@/common/pollyfill.js'
 import router from '@/router'
 import '@/common/resources.js'
 import interceptors from '@/common/interceptors.js'
+import InfiniteScrollDirective from '@/common/infinite_scroll.js'
 import TbFilters from '@/common/filters.js'
 import TbMixins from '@/common/mixins.js'
 import TbDirectives from '@/common/directives.js'
@@ -28,6 +29,8 @@ import {
 
 // 自定义组件
 import Header from '@/components/Header.vue'
+import Cell from '@/components/Cell.vue'
+import Empty from '@/components/Empty.vue'
 
 // vuex化路由
 sync(store, router)
@@ -43,8 +46,11 @@ Vue.component(Progress.name, Progress)
 Vue.use(TbFilters)
 Vue.use(TbMixins)
 Vue.use(TbDirectives)
+Vue.use(InfiniteScrollDirective)
 
 Vue.component(Header.name, Header)
+Vue.component(Cell.name, Cell)
+Vue.component(Empty.name, Empty)
 
 // 表单验证
 // Vue.use(SimpleVueValidation, {

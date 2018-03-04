@@ -1,5 +1,5 @@
 <template lang="pug">
-  header.flex
+  header.flex(:class="{'fixed': fixed}")
     .left.flex.flex-start
       slot(name="left") {{left}}
     .mid.flex-item
@@ -12,6 +12,7 @@
 export default {
   name: 'tb-header',
   props: {
+    fixed: false,
     left: String,
     right: String,
     title: String
@@ -21,9 +22,16 @@ export default {
 
 <style lang="scss" scoped>
 header {
-  padding: 0 15px;
+  padding: 0 18px;
   font-size: $font-size-xll;
   height: $header-height;
+  &.fixed {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 999;
+  }
 }
 
 .left,

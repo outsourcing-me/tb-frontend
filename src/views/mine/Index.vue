@@ -1,27 +1,27 @@
 <template lang="pug">
   section.mine
     tb-header(:title="$t('mine.title.index')", ref="header")
-      .icon.ic_title_menu_Up_tn.mlr10(slot="left", @click="$router.back()")
+      .icon.ic_title_menu_Up_tn.mlr10.mt5(slot="left", @click="routerBack()")
     .body.overflow-scroll(ref="body")
       .banner
         .avatar
           img(src="~assets/images/icon_user.png")
         .name undefined
         .id ID: 123123121
-        .button.button_Withdrawal Withdrawal
+        .button.button_Withdrawal(@click="$router.push({name: 'withdrawal'})") Withdrawal
         .detail
           .inner
-            dl
+            dl(@click="$router.push({name: 'assets'})")
               dt {{$t('mine.index.myAssets')}}
               dd
                 em 35
                 | coins
-            dl
+            dl(@click="$router.push({name: 'record'})")
               dt {{$t('mine.index.record')}}
               dd
                 em 12
                 | next
-            dl
+            dl(@click="$router.push({name: 'history'})")
               dt {{$t('mine.index.history')}}
               dd
                 em 3
@@ -123,6 +123,9 @@ export default {
   dl {
     white-space: nowrap;
     flex: 1;
+    &:active {
+      color: white;
+    }
     &:nth-of-type(2) {
       margin: 0 20px 0 30px;
     }

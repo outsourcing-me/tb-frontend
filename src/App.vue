@@ -109,6 +109,9 @@ body {
     background-size: 100%;
     background-repeat: no-repeat;
   }
+  &.withdrawal {
+    background-color: rgb(248, 248, 248);
+  }
 }
 
 #nprogress .spinner {

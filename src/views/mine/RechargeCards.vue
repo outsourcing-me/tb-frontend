@@ -1,7 +1,8 @@
 <template lang="pug">
   section.recharges
+    tb-empty(v-if="!currentCards.length")
     .card-list
-      .card(v-for="item in cards")
+      .card(v-for="item in currentCards", @click="$router.push({name: 'withdrawal'})")
         .inner
           .body
             .icon.coin_stack_four
@@ -19,8 +20,21 @@ export default {
   props: {
     cards: Array
   },
+
   methods: {
     numeral: Vue.filter('numeral')
+  },
+
+  watch: {
+    cards() {
+      this.currentCards = this.cards
+    }
+  },
+
+  data() {
+    return {
+      currentCards: this.cards || []
+    }
   }
 }
 </script>
