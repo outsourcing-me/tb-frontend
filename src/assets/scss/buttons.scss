@@ -4,7 +4,7 @@
   display: inline-block;
   font-family: 'ComicSansMs';
   font-weight: bold;
-
+  text-shadow: -1px 1px 1px rgba(0, 0, 0, .2);
   &.button_Withdrawal {
     background-position: 0 0;
     width: 170px;
@@ -45,6 +45,9 @@
     background-position: 0 -474px;
     width: 23px;
     height: 16px;
+    &.empty {
+      background-position: 0 -490px;
+    }
   }
   &.ic_start_game_Coin_con2 {
     background-position: 0 -490px;

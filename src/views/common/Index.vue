@@ -8,7 +8,7 @@
         .icon.ic_title_Sound_on(v-else, @click="toggleSound('on')")
     .body.overflow-scroll(ref="body")
       .banner(:style="bannerStyle", disable-swipe)
-        .button.Coins
+        .button.Coins(@click="$router.push({name: 'assets'})")
           span 99999
         mt-swipe(:show-indicators="true", :auto="4000")
           mt-swipe-item
