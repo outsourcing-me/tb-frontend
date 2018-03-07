@@ -2,21 +2,22 @@
   .mint-msgbox-wrapper(:class="msgboxClass", v-show="visible", :style="style")
     transition(name='msgbox')
       .mint-msgbox(v-show="transitionVisible")
+        .icon.close_icon(@click="close('cancel')")
         .mint-msgbox-header
           .mint-msgbox-title
-            slot(name="title")
-              | {{title}}
+            slot(name="title") {{title}}
         .mint-msgbox-content
           .mint-msgbox-message
             slot
+
           //- .mint-msgbox-input(style='display: none;')
             input(placeholder='' type='text')
             .mint-msgbox-errormsg(style='visibility: hidden;')
         .mint-msgbox-btns
-          .mint-msgbox-btn.mint-msgbox-cancel(v-if="showCancelButton", @click="close('cancel')")
+          //- .mint-msgbox-btn.mint-msgbox-cancel.button.ic_game_Message(v-if="showCancelButton", @click="close('cancel')")
             slot(name="cancelButtonContent")
               | 取消
-          .mint-msgbox-btn.mint-msgbox-confirm(@click="close('confirm')")
+          .mint-msgbox-confirm.button.ic_start_game_bg(@click="close('confirm')")
             slot(name="confirmButtonContent")
               | 确定
 
@@ -79,22 +80,38 @@ export default {
 // @import "~assets/scss/_variables.scss";
 // $blue-color: #479bf5;
 .custom-msgbox {
-  &.success-msgbox {
-    .mint-msgbox-header {
-      height: 250px;
-      position: relative;
-      margin-left: -50%;
-      width: 200%;
-      margin-top: -125px;
-
-    }
+  // &.success-msgbox {
+  //   .mint-msgbox-header {
+  //     height: 250px;
+  //     position: relative;
+  //     margin-left: -50%;
+  //     width: 200%;
+  //     margin-top: -125px;
+  //   }
+  // }
+  .mint-msgbox {
+    border-radius: 4px;
+    overflow: visible;
   }
   .mint-msgbox-header {
-    height: 125px;
+    // height: 125px;
+    position: absolute;
+    top: -42px;
+    left: 0;
+    right: 0;
+  }
+  .close_icon {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    z-index: 99;
   }
   .mint-msgbox-content {
     border-bottom: 0;
     line-height: 1.8em;
+    padding-top: 30px;
+    font-family: 'ComicSansMs';
+    font-weight: bold;
     h3 {
       font-size: 18px;
       margin-bottom: 15px;
@@ -103,24 +120,29 @@ export default {
       color: $minor-font-color;
       font-size: $font-size-xs;
     }
-  }
-  .mint-msgbox {
-    border-radius: 4px;
-  }
-  .mint-msgbox-btns {
-    height: auto;
+    .flex > div {
+      margin-top: 15px;
+    }
   }
   .mint-msgbox-confirm {
     color: white;
-    border-radius: 100px;
-    // background-color: $blue-color;
-    margin: 15px 35px;
-    height: 42px;
-    line-height: 42px;
-    // &:active {
-    //   background-color: darken($blue-color, 5%);
-    // }
+    line-height: 60px;
+    font-size: 30px;
+    transform: scale(0.8);
   }
+  .mint-msgbox-btns {
+    justify-content: center;
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+  } // .mint-msgbox-confirm {
+  //   color: white;
+  //   border-radius: 100px;
+  //   margin: 15px 35px;
+  //   height: 42px;
+  //   line-height: 42px;
+  // }
 }
 
 .msgbox-enter {

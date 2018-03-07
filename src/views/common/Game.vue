@@ -24,10 +24,10 @@
         .clip
           .button.ic_start_game_Coin_con(v-for="n in 6", :class="{'empty': n > currentClipCount}")
       .clock(v-show="status === 'playing'")
-        .button.ic_start_game_countdown1
+        .button.ic_start_game_countdown1(@click="countdownStart")
           .countdown
-            .icon.number.n0
-            .icon.number.n1
+            .icon.number(:class="'n' + countdown.shiWei")
+            .icon.number(:class="'n' + countdown.geWei")
       .players(:class="[expand ? 'expand' : '', status]")
         .player-queue
           .handle(@click="expand = !expand")
@@ -68,6 +68,7 @@ import { each } from 'lodash'
 import msgBox from '@/common/custom_msgbox.js'
 
 export default {
+  countdownHandle: null,
   mounted() {
     // setInterval(() => {
     //   this.barrageList.shift()
@@ -79,6 +80,10 @@ export default {
     //   this.currentClipCount = (Math.random() * 7) | 0
     //   this.playerList = shuffle(this.playerList)
     // }, 2000)
+  },
+
+  beforeDesdroy() {
+    this.countdownStop()
   },
 
   methods: {
@@ -98,8 +103,45 @@ export default {
       }, 1000)
     },
 
+    countdownStart() {
+      this.countdownStop()
+      this.countdown = { number: 30, geWei: 0, shiWei: 3 }
+      this.countdownHandle = setInterval(() => {
+        if (this.countdown.number > 0) {
+          this.countdown.number -= 1
+          const numberResolved = this.countdown.number.toString().split('')
+          this.countdown.shiWei = numberResolved[0]
+          this.countdown.geWei = numberResolved[1]
+        }
+      }, 1000)
+    },
+
+    countdownStop() {
+      clearInterval(this.countdownHandle)
+    },
+
     showWinDialog() {
-      msgBox()
+      // msgBox({
+      //   title: '<div class="button Ribbon_con"></div>',
+      //   message: `
+      //     <div class="button win"></div>
+      //     <div>
+      //       <div class="icon Coin_icon mr5"></div><div class="icon number n1 mrr5"></div><div class="icon number n2"></div>
+      //     </div>
+      //   `
+      // })
+      // msgBox({
+      //   message: `
+      //     <div class="button nothing"></div>
+      //     <div>
+      //       has no coins!
+      //     </div>
+      //   `
+      // })
+
+      msgBox({
+        message: 'In the game <br> ok to exit'
+      })
     },
 
     loadClip() {
@@ -108,7 +150,7 @@ export default {
       each([0, 1, 2, 3, 4, 5], v => {
         setTimeout(() => {
           this.currentClipCount += 1
-        }, v * 100 + 500)
+        }, v * 100 + 300)
       })
       setTimeout(() => { this.animateCoins = false }, 1000)
     },
@@ -149,6 +191,11 @@ export default {
         id: 4,
         avatar: require('@/assets/images/icon_user.png')
       }],
+      countdown: {
+        number: 30,
+        geWei: 1,
+        shiWei: 1
+      },
       winTipNum: {
         geWei: 1,
         shiWei: 1

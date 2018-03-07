@@ -8,6 +8,7 @@ import 'core-js/fn/promise' // for vuex
 
 const state = {
   user: JSON.parse(user || '{}') || {}, // 很奇怪，JSON.parse(user || '{}')结果竟然是null
+  loadingSuccess: false,
   updaterProgressValue: 0,
   updaterProgressVisible: false,
   currentState: {

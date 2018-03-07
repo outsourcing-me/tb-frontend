@@ -22,13 +22,17 @@ router.beforeEach((to, from, next) => {
     setTimeout(() => { opt ? next(opt) : next() })
   }
 
-  const { user, token } = store.getters
+  const { user, token, loadingSuccess } = store.getters
   if (!to.meta.skipAuth) { // 需要登录权限的页面
     if (!token || !user.phone) {
       nextAsync({ name: 'login', query: { redirect: to.fullPath } })
+    } else if (to.name !== 'loading' && !loadingSuccess) {
+      nextAsync({ name: 'loading' })
     } else {
       nextAsync()
     }
+  } else if (to.name !== 'loading' && !loadingSuccess) {
+    nextAsync({ name: 'loading' })
   } else { // 不需要权限的页面不拦截
     nextAsync()
   }

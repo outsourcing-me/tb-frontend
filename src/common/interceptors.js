@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import { includes, isObject, isFunction } from 'lodash'
-import { MessageBox, Indicator } from 'mint-ui'
+import { Indicator } from 'mint-ui'
 import store from '@/store'
 import { read, save } from '@/storage'
 import { RET_CODE_MAP } from '@/constants.js'
 import moment from 'moment'
 import i18n from '@/i18n'
+import MessageBox from '@/common/custom_msgbox.js'
 
 const msgBox = function(message) {
   MessageBox({

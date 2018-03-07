@@ -28,8 +28,8 @@ export default {
     },
     msgBox: {
       title: 'prompt',
-      confirmButtonText: 'OK',
-      cancelButtonText: 'Cancel'
+      confirmButtonText: 'ok',
+      cancelButtonText: 'cancel'
     }
   },
   updater: {

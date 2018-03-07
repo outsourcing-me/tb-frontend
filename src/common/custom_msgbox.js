@@ -6,6 +6,9 @@ function removeOldMsgBox() {
   each(document.querySelectorAll('.custom-msgbox'), v => {
     v && v.remove()
   })
+  each(document.querySelectorAll('.v-modal'), v => {
+    v && v.remove()
+  })
 }
 
 export default function(data = {}, callback) {
@@ -16,8 +19,7 @@ export default function(data = {}, callback) {
     el: document.createElement('div'),
     template: `<tb-msgbox ref="msgBox"  :msgbox-class="classes" :showCancelButton="false">
                 <h3 slot="title" v-html="title"></h3>
-                <div>
-                  <p v-html="message"></p>
+                <div class="flex flex-down" v-html="message" style="min-height: 150px;">
                 </div>
                 <div slot="confirmButtonContent">{{confirmButtonText}}</div>
                 <div slot="note" @click="$emit('note-click')" v-html="note"></div>
@@ -26,7 +28,7 @@ export default function(data = {}, callback) {
     data() {
       return Object.assign({
         classes: ['custom-msgbox'],
-        title: i18n.t('global.msgBox.title'),
+        title: '<div class="button Ribbon_pro"></div>',
         message: '',
         note: '',
         confirmButtonText: i18n.t('global.msgBox.confirmButtonText')

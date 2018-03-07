@@ -7,6 +7,10 @@ export default {
     state.user.phone = phone
   },
 
+  updateLoadingSuccess(state, value = false) {
+    state.loadingSuccess = value
+  },
+
   updateToken(state, token) {
     state.token = token
   },

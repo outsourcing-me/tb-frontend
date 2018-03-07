@@ -3,7 +3,8 @@ export default {
     title: {
       index: 'push push',
       login: 'Login',
-      game: 'Game'
+      game: 'Game',
+      loading: 'Loading'
     },
     index: {
       priceUnit: 'coins/time'

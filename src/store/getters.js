@@ -7,6 +7,10 @@ export default {
     return state.token
   },
 
+  loadingSuccess(state) {
+    return state.loadingSuccess
+  },
+
   updaterProgressValue(state) {
     return state.updaterProgressValue
   },

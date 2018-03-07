@@ -6,6 +6,10 @@ body {
     touch-action: pan-y;
     max-height: 100vh;
   }
+  .mint-msgbox {
+    width: 240px;
+    min-height: 255px;
+  }
 
   .mint-swipe-indicator {
     background-color: white;
