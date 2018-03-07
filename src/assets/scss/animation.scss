@@ -12,3 +12,34 @@
     opacity: 0;
   }
 }
+
+$spaceList : -2,
+3.75,
+6.5,
+15.25,
+21,
+25.25;
+@for $i from 1 through length($spaceList) {
+  $value: nth($spaceList, $i);
+  @keyframes rotateFadeDown#{$i} {
+    0% {
+      opacity: 1;
+    }
+    25% {
+      opacity: 0.8;
+      transform: translateY(8px) translateX(1px * $value) rotateY(45deg) rotateX(10deg) scale(0.9);
+    }
+    50% {
+      opacity: 0.6;
+      transform: translateY(16px) translateX(2px * $value) rotateY(90deg) rotateX(20deg) scale(0.85);
+    }
+    75% {
+      opacity: 0.4;
+      transform: translateY(24px) translateX(3px * $value) rotateY(135deg) rotateX(30deg) scale(0.8);
+    }
+    100% {
+      opacity: 0.2;
+      transform: translateY(32px) translateX(4px * $value) rotateY(180deg) rotateX(50deg) scale(0.75);
+    }
+  }
+}

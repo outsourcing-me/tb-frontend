@@ -31,6 +31,7 @@ import {
 import Header from '@/components/Header.vue'
 import Cell from '@/components/Cell.vue'
 import Empty from '@/components/Empty.vue'
+import Msgbox from '@/components/Msgbox.vue'
 
 // vuex化路由
 sync(store, router)
@@ -51,6 +52,7 @@ Vue.use(InfiniteScrollDirective)
 Vue.component(Header.name, Header)
 Vue.component(Cell.name, Cell)
 Vue.component(Empty.name, Empty)
+Vue.component(Msgbox.name, Msgbox)
 
 // 表单验证
 // Vue.use(SimpleVueValidation, {

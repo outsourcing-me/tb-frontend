@@ -7,10 +7,18 @@
         .icon.ic_title_Sound_on(v-else, @click="toggleSound('on')")
     .body.overflow-scroll(ref="body")
       .coins(v-show="status === 'playing'")
-        .tips.text-center
-          .icon.add
-          .icon.number.n0
-          .icon.number.n1
+        transition(:name="winTipTranstion")
+          .tips.text-center(v-if="winTipShow")
+            .icon.add
+            .icon.number(:class="'n' + winTipNum.shiWei")
+            .icon.number(:class="'n' + winTipNum.geWei")
+        .animate-coins(:class="{animate: animateCoins}")
+          .icon.Coin_icon.coin1(@click="loadClip")
+          .icon.Coin_icon.coin2(@click="loadClip")
+          .icon.Coin_icon.coin3(@click="loadClip")
+          .icon.Coin_icon.coin4(@click="loadClip")
+          .icon.Coin_icon.coin5(@click="loadClip")
+          .icon.Coin_icon.coin6(@click="loadClip")
         .button.ic_start_game_my(@click="$router.push({name: 'assets'})")
           span 9999
         .clip
@@ -28,40 +36,21 @@
             .player-count.ml5
               .icon.ic_status_icon_eye_w
               .count 88
-          .player.flex
-            .avatar
-              img(src="~assets/images/icon_user.png")
-            .avatar
-              img(src="~assets/images/icon_user.png")
-            .avatar
-              img(src="~assets/images/icon_user.png")
-            .avatar
-              img(src="~assets/images/icon_user.png")
-            .avatar
-              img(src="~assets/images/icon_user.png")
-        .barrage-list
-          .barrage-item
+          transition-group.player.flex(name="slideDownFade", tag="div")
+            .avatar(v-for="player in playerList", :key="player.id")
+              img(:src="player.avatar")
+        //- .barrage-list
+        transition-group.barrage-list(name="slideDownFade", tag="div")
+          .barrage-item(v-for="barrage in barrageList", :key="barrage.id")
             .avatar-sm
-              img(src="~assets/images/icon_user.png")
-            .barrage-content 123131312322222222222222222222222221
-          .barrage-item
-            .avatar-sm
-              img(src="~assets/images/icon_user.png")
-            .barrage-content 122
-          .barrage-item
-            .avatar-sm
-              img(src="~assets/images/icon_user.png")
-            .barrage-content 12131231
-          .barrage-item
-            .avatar-sm
-              img(src="~assets/images/icon_user.png")
-            .barrage-content 3131231
+              img(:src="barrage.avatar")
+            .barrage-content {{barrage.content}}
       img.demo(src="~assets/images/home_Show_1@3x.png")
       .footer.flex
         .flex-item
           .icon.ic_game_Message(@click="showMessageInput")
         .flex-item
-          .button.ic_start_game_bg ready
+          .button.ic_start_game_bg(@click="showWinDialog") ready
         .flex-item.text-right.play-status
           .button.ic_status_icon(v-if="status === 'watching'")
             span watching
@@ -75,7 +64,23 @@
 </template>
 
 <script>
+import { each } from 'lodash'
+import msgBox from '@/common/custom_msgbox.js'
+
 export default {
+  mounted() {
+    // setInterval(() => {
+    //   this.barrageList.shift()
+    //   this.barrageList.push({
+    //     id: Math.random().toString(16).slice(2),
+    //     avatar: require('@/assets/images/icon_user.png'),
+    //     content: Math.random()
+    //   })
+    //   this.currentClipCount = (Math.random() * 7) | 0
+    //   this.playerList = shuffle(this.playerList)
+    // }, 2000)
+  },
+
   methods: {
     toggleSound(action) {
       console.log(action)
@@ -84,6 +89,28 @@ export default {
 
     submit() {
       this.messageInputVisible = false
+    },
+
+    showWinTip() {
+      this.winTipShow = true
+      setTimeout(() => {
+        this.winTipShow = false
+      }, 1000)
+    },
+
+    showWinDialog() {
+      msgBox()
+    },
+
+    loadClip() {
+      this.currentClipCount = 0
+      this.animateCoins = true
+      each([0, 1, 2, 3, 4, 5], v => {
+        setTimeout(() => {
+          this.currentClipCount += 1
+        }, v * 100 + 500)
+      })
+      setTimeout(() => { this.animateCoins = false }, 1000)
     },
 
     showMessageInput() {
@@ -96,9 +123,41 @@ export default {
 
   data() {
     return {
-      // playStatus: 'watching',
+      barrageList: [{
+        id: 1,
+        avatar: require('@/assets/images/icon_user.png'),
+        content: '12311111111111111111111'
+      }, {
+        id: 2,
+        avatar: require('@/assets/images/icon_user.png'),
+        content: '12311111144411111111'
+      }, {
+        id: 3,
+        avatar: require('@/assets/images/icon_user.png'),
+        content: '12311111111111222111111111'
+      }],
+      playerList: [{
+        id: 1,
+        avatar: require('@/assets/images/icon_user.png')
+      }, {
+        id: 2,
+        avatar: require('@/assets/images/clear.png')
+      }, {
+        id: 3,
+        avatar: require('@/assets/images/profile_bg@3x.png')
+      }, {
+        id: 4,
+        avatar: require('@/assets/images/icon_user.png')
+      }],
+      winTipNum: {
+        geWei: 1,
+        shiWei: 1
+      },
+      winTipTranstion: 'slideDownFade',
+      winTipShow: false,
       messageInputVisible: false,
       currentClipCount: 3,
+      animateCoins: false,
       message: '',
       status: 'playing',
       expand: false,
@@ -110,6 +169,28 @@ export default {
 <style lang="scss" scoped>
 .demo {
   width: 100%;
+}
+
+.slideDownFade-leave-active {
+  position: absolute;
+}
+
+.animate-coins {
+  &.animate {
+    @for $i from 1 through 6 {
+      .coin#{$i} {
+        animation-name: rotateFadeDown#{$i};
+        animation-timing-function: ease-in;
+        animation-duration: .5s;
+        animation-delay: 0.1s * ($i - 1);
+        animation-iteration-count: 1;
+      }
+    }
+  }
+}
+
+.ic_start_game_Coin_con {
+  transition: background .5s;
 }
 
 .handle {
@@ -186,6 +267,12 @@ export default {
   z-index: 1000;
 }
 
+.Coin_icon {
+  position: absolute;
+  left: 5px;
+  top: 2px;
+}
+
 .ic_start_game_my {
   color: white;
   span {
@@ -247,6 +334,7 @@ export default {
 }
 
 .barrage-item {
+  transition: all .3s;
   margin-bottom: 3px;
   display: flex;
   align-items: center;

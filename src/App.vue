@@ -86,6 +86,7 @@ export default {
 @import '~assets/scss/buttons.scss';
 @import '~assets/scss/border.scss';
 @import '~assets/scss/transition.scss';
+@import '~assets/scss/animation.scss';
 // @import '~assets/scss/badge.scss';
 @import '~assets/scss/flex.scss';
 // @import '~assets/scss/form.scss';

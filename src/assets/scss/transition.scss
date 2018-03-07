@@ -1,16 +1,32 @@
 .slideUpFade-enter-active,
 .slideUpFade-leave-active {
-  transition: transform .2s ease-out, opacity .4s ease-in;
+  transition: transform .3s ease-out, opacity .2s ease-in;
 }
 
 .slideUpFade-enter,
 .slideUpFade-leave-to {
-  opacity: 0.3;
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.slideDownFade-enter-active,
+.slideDownFade-leave-active {
+  transition: transform .3s ease-out, opacity .2s ease-in;
+}
+
+.slideDownFade-enter{
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.slideDownFade-leave-to {
+  opacity: 0;
   transform: translateY(-100%);
 }
 
 .slideLeftFade-enter-active,
-.slideLeftFade-leave-active {
+.slideLeftFade-leave-active,
+.slideDownFade-move {
   transition: transform .2s ease-out, opacity .4s ease-in;
 }
 

@@ -14,14 +14,14 @@ export default function(data = {}, callback) {
   /* eslint-disable no-new */
   return new Vue({
     el: document.createElement('div'),
-    template: `<fb-msgbox ref="msgBox"  :msgbox-class="classes" :showCancelButton="false">
+    template: `<tb-msgbox ref="msgBox"  :msgbox-class="classes" :showCancelButton="false">
                 <h3 slot="title" v-html="title"></h3>
                 <div>
                   <p v-html="message"></p>
                 </div>
                 <div slot="confirmButtonContent">{{confirmButtonText}}</div>
                 <div slot="note" @click="$emit('note-click')" v-html="note"></div>
-              </fb-msgbox>`,
+              </tb-msgbox>`,
 
     data() {
       return Object.assign({
