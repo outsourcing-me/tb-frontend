@@ -4,6 +4,7 @@ body {
     overflow: auto;
     overflow-y: scroll;
     touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
     max-height: 100vh;
   }
   .mint-msgbox {

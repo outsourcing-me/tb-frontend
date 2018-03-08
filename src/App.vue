@@ -124,9 +124,9 @@ small {
 }
 
 .container {
-  height: 100vh;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
+  // height: 100vh;
+  // overflow-y: scroll;
+  // -webkit-overflow-scrolling: touch;
   transition: background .5s;
   &.header-show {
     padding-top: $header-height;

@@ -20,6 +20,7 @@ const images = [
 
 export default {
   mounted() {
+    this.redirect = decodeURIComponent(this.$route.query.redirect || '')
     this.loadingImages()
   },
 
@@ -42,11 +43,14 @@ export default {
           img.src = image
         }))
       })
+
       Promise.all(promises).then(res => {
         console.log('loading done')
         setTimeout(() => {
           this.$store.commit('updateLoadingSuccess', true)
-          this.$router.push({ name: 'index' })
+          this.$router.replace({
+            path: this.redirect || '/h5/index'
+          })
         }, 1000)
       })
     }
@@ -54,6 +58,7 @@ export default {
 
   data() {
     return {
+      redirect: '',
       percent: 0
     }
   }

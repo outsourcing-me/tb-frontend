@@ -5,32 +5,33 @@
     .body.overflow-scroll(ref="body")
       .banner
         .avatar
-          img(src="~assets/images/icon_user.png")
-        .name undefined
-        .id ID: 123123121
+          img(:src="user.avatar || avatarSpare")
+        .name {{user.nick}}
+        .id ID: {{user.userid}}
         .button.button_Withdrawal(@click="$router.push({name: 'withdrawal'})") Withdrawal
         .detail
           .inner
             dl(@click="$router.push({name: 'assets'})")
               dt {{$t('mine.index.myAssets')}}
               dd
-                em 35
+                em {{user.assets}}
                 | coins
             dl(@click="$router.push({name: 'record'})")
               dt {{$t('mine.index.record')}}
               dd
-                em 12
+                em {{user.recorde}}
                 | next
             dl(@click="$router.push({name: 'history'})")
               dt {{$t('mine.index.history')}}
               dd
-                em 3
+                em {{user.history}}
                 | next
       recharge-cards(:cards="recharges")
 </template>
 
 <script>
 import RechargeCards from '@/views/mine/RechargeCards.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -42,8 +43,13 @@ export default {
     this.updateContainerHeight(body, header.$el)
   },
 
+  computed: {
+    ...mapGetters(['user'])
+  },
+
   data() {
     return {
+      avatarSpare: require('@/assets/images/icon_user.png'),
       recharges: [{
         cost: 500,
         coins: 6000

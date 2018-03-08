@@ -8,19 +8,20 @@
       .banner(:style="bannerStyle", disable-swipe)
         img.banner-img(src="~assets/images/coin_bg@3x.png")
         .title {{$t('mine.assets.myAssets')}}
-        .sub-title <em>20</em> {{$t('mine.assets.assetUint')}}
+        .sub-title <em>{{user.assets}}</em> {{$t('mine.assets.assetUint')}}
       .cells(v-infinite-scroll="loadMore", infinite-scroll-disabled="loading", infinite-scroll-distance="10")
         tb-empty(v-if="!recordList.length")
-        tb-cell(v-for="item in recordList", :title="item.name", :label="item.date | moment('YYYY-MM-DD HH:mm:ss')")
+        tb-cell(v-for="item in recordList", :title="item.title", :label="item.time | moment('YYYY-MM-DD HH:mm:ss')")
           .cell-value(slot="value")
-            .row(:class="{'el-green': item.value < 0, 'el-orange': item.value >= 0}") {{item.value | tbPositveNumber}}
-            .row.mt10.capitalize.sub-item {{item.status}}
+            .row(:class="{'el-green': number(item.coin) < 0, 'el-orange': number(item.coin) >= 0}") {{item.coin}}
+            .row.mt10.capitalize.sub-item(:class="item.status") {{item.status}}
       .no-more-data(v-if="noMoreData")
         small {{$t('layout.noMoreData')}}
 </template>
 
 <script>
 import { debounce } from 'lodash'
+import { coinLog } from '@/common/resources.js'
 
 export default {
   created() {
@@ -32,56 +33,33 @@ export default {
   mounted() {
     const { body, header } = this.$refs
     this.updateContainerHeight(body, header.$el)
+    this._fetchData()
   },
 
   methods: {
-    loadMore: debounce(function() {
-      if (this.loading) return
-
+    number: Number,
+    async _fetchData() {
       this.loading = true
-      setTimeout(() => {
-        this.recordList.push({
-          name: 'test',
-          date: new Date(),
-          value: 100
-        })
-        if (this.recordList.length < 9) this.loading = false
-        else this.noMoreData = true
-      }, 1000)
+      const res = await coinLog.save().then(res => res.json())
+      this.recordList = this.recordList.concat(res.data.list)
+      if (this.recordList.length < 9) this.loading = false
+      else this.noMoreData = true
+    },
+
+    loadMore: debounce(function() {
+      console.log('loading')
+      if (this.loading) return
+      this._fetchData()
     }, 500)
   },
 
   data() {
     return {
+      user: this.$store.getters.user,
       loading: false,
       noMoreData: false,
       bannerStyle: {},
-      recordList: [{
-        name: 'Buy',
-        date: new Date(),
-        status: 'audit',
-        value: 10
-      }, {
-        name: 'Withdrawal',
-        date: new Date(),
-        status: 'audit',
-        value: 10
-      }, {
-        name: 'Buy',
-        date: new Date(),
-        status: 'Success',
-        value: 10
-      }, {
-        name: 'Buy',
-        date: new Date(),
-        status: 'Failure®',
-        value: 10
-      }, {
-        name: 'Buy',
-        date: new Date(),
-        status: 'audit',
-        value: 10
-      }]
+      recordList: []
     }
   }
 }
@@ -106,6 +84,10 @@ export default {
   em {
     font-size: 30px;
   }
+}
+
+.Failure {
+  color: $el-red!important;
 }
 
 .cells {

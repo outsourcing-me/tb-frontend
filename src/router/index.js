@@ -17,24 +17,29 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async(to, from, next) => {
   const nextAsync = function(opt) { // 避免watch先于popstate事件执行的问题
     setTimeout(() => { opt ? next(opt) : next() })
   }
 
   const { user, token, loadingSuccess } = store.getters
   if (!to.meta.skipAuth) { // 需要登录权限的页面
-    if (!token || !user.phone) {
+    if (!token || !user.userid) {
       nextAsync({ name: 'login', query: { redirect: to.fullPath } })
     } else if (to.name !== 'loading' && !loadingSuccess) {
-      nextAsync({ name: 'loading' })
+      nextAsync({ name: 'loading', query: { replace: true, redirect: to.fullPath } })
+    } else if (user.userid) {
+      nextAsync()
+    } else {
+      await store.dispatch('getUser')
+      nextAsync()
+    }
+  } else { // 不需要权限的页面不拦截
+    if (to.name !== 'loading' && !loadingSuccess) {
+      nextAsync({ name: 'loading', query: { replace: true, redirect: to.fullPath } })
     } else {
       nextAsync()
     }
-  } else if (to.name !== 'loading' && !loadingSuccess) {
-    nextAsync({ name: 'loading' })
-  } else { // 不需要权限的页面不拦截
-    nextAsync()
   }
 })
 

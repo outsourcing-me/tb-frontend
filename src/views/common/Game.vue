@@ -20,7 +20,7 @@
           .icon.Coin_icon.coin5(@click="loadClip")
           .icon.Coin_icon.coin6(@click="loadClip")
         .button.ic_start_game_my(@click="$router.push({name: 'assets'})")
-          span 9999
+          span {{user.assets}}
         .clip
           .button.ic_start_game_Coin_con(v-for="n in 6", :class="{'empty': n > currentClipCount}")
       .clock(v-show="status === 'playing'")
@@ -66,6 +66,7 @@
 <script>
 import { each } from 'lodash'
 import msgBox from '@/common/custom_msgbox.js'
+import { mapGetters } from 'vuex'
 
 export default {
   countdownHandle: null,
@@ -161,6 +162,10 @@ export default {
         this.$refs.messageInput.focus()
       })
     }
+  },
+
+  computed: {
+    ...mapGetters(['user'])
   },
 
   data() {

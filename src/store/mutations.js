@@ -15,6 +15,10 @@ export default {
     state.token = token
   },
 
+  updateNow(state, date) {
+    state.now = date
+  },
+
   updateUpdaterProgressValue(state, value) {
     state.updaterProgressValue = value
   },

@@ -1,5 +1,5 @@
 import router from '@/router'
-import { login, userSelf } from '@/common/resources.js'
+import { login, userInfo } from '@/common/resources.js'
 import * as Storage from '@/storage'
 import {
   STORE_KEY_USER,
@@ -22,7 +22,7 @@ export default {
 
   // 获取用户信息
   async getUser({ commit, dispatch }, params = {}) {
-    const res = await userSelf.get(params).then(res => res.json())
+    const res = await userInfo.save(params).then(res => res.json())
     if (res.code === RET_CODE_MAP.OK) {
       const user = res.data
       await dispatch('updateUser', user)

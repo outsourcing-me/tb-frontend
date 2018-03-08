@@ -18,3 +18,8 @@ const commonOpts = {
 
 const resource = Vue.resource
 export const login = resource('login', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 登录
+export const userInfo = resource('user/info', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 用户信息
+export const roomList = resource('room/list', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 房价列表
+export const bannerList = resource('banner', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 轮播图
+export const coinLog = resource('user/coin_log', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 提现记录
+export const winPrize = resource('user/win_prize', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 消耗中奖记录

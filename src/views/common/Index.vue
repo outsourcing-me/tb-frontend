@@ -3,20 +3,17 @@
     tb-header(:title="$t('common.title.index')", ref="header")
       .icon.ic_title_my.mlr10.mt5(slot="left", @click="$router.push({name: 'mine'})")
       .flex.mrr10.mt5(slot="right")
-        .icon.ic_game_Message.mrr5
+        .icon.ic_game_Message.mrr5(@click="showContact")
         .icon.ic_title_Sound_off(v-if="soundOn", @click="toggleSound('off')")
         .icon.ic_title_Sound_on(v-else, @click="toggleSound('on')")
     .body.overflow-scroll(ref="body")
       .banner(:style="bannerStyle", disable-swipe)
         .button.Coins(@click="$router.push({name: 'assets'})")
-          span 99999
+          span {{user.assets}}
         mt-swipe(:show-indicators="true", :auto="4000")
-          mt-swipe-item
-            img.banner-img(src="~assets/images/banner1@3x.png")
-          mt-swipe-item
-            img.banner-img(src="~assets/images/banner1@3x.png")
-          mt-swipe-item
-            img.banner-img(src="~assets/images/banner1@3x.png")
+          mt-swipe-item(v-for="banner in bannerList", :key="banner.id")
+            img.banner-img(:src="banner.pic", @click="$router.push({path: banner.jumpurl})")
+
       tb-empty(v-if="!roomList.length")
       .room-list
         .room-card(v-for="room in roomList", :key="room.roomid", @click="enterRoom(room)")
@@ -30,12 +27,14 @@
                 .flex-item.flex2 {{room.price}} {{$t('common.index.priceUnit')}}
                 .flex-item.text-right
                   .icon.ic_status_icon_eye.mr5
-                  | 88
+                  | {{room.playcount}}
 
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { roomList, bannerList } from '@/common/resources.js'
+import msgBox from '@/common/custom_msgbox.js'
 
 export default {
   created() {
@@ -47,6 +46,20 @@ export default {
   mounted() {
     const { body, header } = this.$refs
     this.updateContainerHeight(body, header.$el)
+
+    bannerList
+      .save()
+      .then(res => res.json())
+      .then(res => {
+        this.bannerList = res.data.list
+      })
+
+    roomList
+      .save()
+      .then(res => res.json())
+      .then(res => {
+        this.roomList = res.data.list
+      })
   },
 
   methods: {
@@ -54,6 +67,11 @@ export default {
       console.log(action)
       this.soundOn = action === 'on'
     },
+
+    showContact() {
+      msgBox({ message: '<div>contact: <a href="tel://18611211111">18611211111</a></div>' })
+    },
+
     enterRoom(room) {
       this.$router.push({
         name: 'game',
@@ -69,28 +87,8 @@ export default {
   data() {
     return {
       soundOn: false,
-      roomList: [{
-        'roomid': '1',
-        'name': 'Clown coin push',
-        'desc': '',
-        'price': '20',
-        'pic': 'http://cdn.coolguang.com/public/wawaji/new1/mobile/kuaisufabu001.jpg',
-        status: 'idle'
-      }, {
-        'roomid': '2',
-        'name': '1',
-        'desc': '',
-        'price': '30',
-        'pic': 'http://cdn.coolguang.com/public/wawaji/new1/mobile/kuaisufabu001.jpg',
-        status: 'busy'
-      }, {
-        'roomid': '3',
-        'name': '1',
-        'desc': '',
-        'price': '50',
-        'pic': 'http://cdn.coolguang.com/public/wawaji/new1/mobile/kuaisufabu001.jpg',
-        status: 'busy'
-      }],
+      roomList: [],
+      bannerList: [],
       bannerStyle: {},
       selectedProduct: '',
       products: []

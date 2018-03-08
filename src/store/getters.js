@@ -7,6 +7,10 @@ export default {
     return state.token
   },
 
+  now(state) {
+    return state.now
+  },
+
   loadingSuccess(state) {
     return state.loadingSuccess
   },
