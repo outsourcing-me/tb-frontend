@@ -48,7 +48,7 @@ export default {
     this.updateContainerHeight(body, header.$el)
 
     bannerList
-      .save()
+      .save({ userid: this.user.userid })
       .then(res => res.json())
       .then(res => {
         this.bannerList = res.data.list

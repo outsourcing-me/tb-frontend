@@ -22,9 +22,13 @@ router.beforeEach(async(to, from, next) => {
     setTimeout(() => { opt ? next(opt) : next() })
   }
 
+  if (to.query.token) {
+    await store.dispatch('updateToken', to.query.token)
+  }
+
   const { user, token, loadingSuccess } = store.getters
   if (!to.meta.skipAuth) { // 需要登录权限的页面
-    if (!token || !user.userid) {
+    if (!token) {
       nextAsync({ name: 'login', query: { redirect: to.fullPath } })
     } else if (to.name !== 'loading' && !loadingSuccess) {
       nextAsync({ name: 'loading', query: { replace: true, redirect: to.fullPath } })

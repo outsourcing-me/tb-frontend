@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
+import store from '@/store'
 Vue.use(VueResource)
 
 const previousRequestMap = {}
@@ -13,6 +14,10 @@ const commonOpts = {
     }
 
     previousRequestMap[key] = request
+    const body = request.body ? JSON.parse(request.body) : {}
+    body.token = store.getters.token
+    body.userid = store.getters.user.userid || ''
+    request.body = JSON.stringify(body)
   }
 }
 

@@ -1,215 +1,91 @@
 {
   "files": {
-    "static/fonts/iconfont.svg": {
-      "version": "90d1ab186cefdcf97e8032a38d1c21b035b86ed9",
-      "filename": "static/fonts/iconfont.svg"
+    "static/img/icons-retina.png": {
+      "version": "5b2b833da0301d13b99c9e76186cf422fd72cc61",
+      "filename": "static/img/icons-retina.png"
     },
-    "static/fonts/iconfont.eot": {
-      "version": "9b56ab8d8eeb68d3920ec383089c2a41f07d7a22",
-      "filename": "static/fonts/iconfont.eot"
+    "static/img/ic_default_doll_icon.png": {
+      "version": "f5ac53fd365566ad624a67afd693e42665ac730f",
+      "filename": "static/img/ic_default_doll_icon.png"
     },
-    "static/fonts/iconfont.ttf": {
-      "version": "469464e4df21dd1d1322f4da255a0005f33db450",
-      "filename": "static/fonts/iconfont.ttf"
+    "static/img/coin_bg@3x.png": {
+      "version": "29e4c874cf3cf55d698241470c3d7f8becfddd36",
+      "filename": "static/img/coin_bg@3x.png"
     },
-    "static/img/next.png": {
-      "version": "009b5893bd7fd137ce891634d509452a704b1573",
-      "filename": "static/img/next.png"
+    "static/img/profile_bg@3x.png": {
+      "version": "3e5ec1437808f34337c88ffe2fd9f0f41fb5137a",
+      "filename": "static/img/profile_bg@3x.png"
     },
-    "static/img/wave-shim.jpg": {
-      "version": "dc464160815ba2f677be6e88ec3b3606fa91797c",
-      "filename": "static/img/wave-shim.jpg"
-    },
-    "static/img/xinyong_lv_bg.jpg": {
-      "version": "42754ef32becbe0b80bcb5dc55b0d2f862dabf21",
-      "filename": "static/img/xinyong_lv_bg.jpg"
-    },
-    "static/fonts/franklin.woff": {
-      "version": "36251fd57918d70a5407a8987ab047d247571ed0",
-      "filename": "static/fonts/franklin.woff"
+    "static/img/buttons-retina.png": {
+      "version": "d6b3d15c0b07ce9538e007407aebfc6ffacf3b47",
+      "filename": "static/img/buttons-retina.png"
     },
     "static/img/clear.png": {
       "version": "7e88e4f656a4f42515c4d0bb0dd5e70488329349",
       "filename": "static/img/clear.png"
     },
-    "static/img/previous.png": {
-      "version": "85f57e1a6069728f78cec248dd0744253d257cce",
-      "filename": "static/img/previous.png"
+    "static/img/ic_empty_tick.png": {
+      "version": "198ec938c15dddbb155e900bb3d6aed461706a91",
+      "filename": "static/img/ic_empty_tick.png"
     },
-    "static/img/authorized-bg.jpg": {
-      "version": "e95f82c5aaca6368cf4aa90a5047536c8397a68c",
-      "filename": "static/img/authorized-bg.jpg"
+    "static/img/icon_user.png": {
+      "version": "621a1cd9ddcf0dc77019c16e9f67b0b844bfa8ac",
+      "filename": "static/img/icon_user.png"
     },
-    "static/img/icon-success.png": {
-      "version": "7a2d418e99df0aa2ee32ab1a167482c3db36beb8",
-      "filename": "static/img/icon-success.png"
-    },
-    "static/img/stroke.png": {
-      "version": "c338dbe4c51fe2894436fd5248fd1882b3523c2e",
-      "filename": "static/img/stroke.png"
-    },
-    "static/img/next_press.png": {
-      "version": "4625c229c29fc6278c7be0fb44247eb5a2206761",
-      "filename": "static/img/next_press.png"
-    },
-    "static/fonts/franklin.svg": {
-      "version": "5b03631fd35068a5bc8cac7e892d161814810ed6",
-      "filename": "static/fonts/franklin.svg"
-    },
-    "static/fonts/franklin.eot": {
-      "version": "af3d3274d3eba23636642ca35ed16460bd91f8f3",
-      "filename": "static/fonts/franklin.eot"
-    },
-    "static/img/download-logo.jpg": {
-      "version": "ce05004e1899f04d80f7296cf8166b38e7fffc8e",
-      "filename": "static/img/download-logo.jpg"
-    },
-    "static/img/icon-error.png": {
-      "version": "bd8f18460eab44510e38e1f958e18cca9b72f3d3",
-      "filename": "static/img/icon-error.png"
-    },
-    "static/img/credit-header-bg.png": {
-      "version": "bc606cb47848a5ffc22dcf09e75c4ffcd9265ab1",
-      "filename": "static/img/credit-header-bg.png"
-    },
-    "static/img/success-icon.png": {
-      "version": "fb1700210906e7e89fbd3c8abf81d17213138a9e",
-      "filename": "static/img/success-icon.png"
-    },
-    "static/fonts/franklin.ttf": {
-      "version": "58825a29a36cff1c8f35f77e35c0624fbb090d91",
-      "filename": "static/fonts/franklin.ttf"
-    },
-    "static/img/wexin-download-arrow.png": {
-      "version": "2cb7483256d378c2609c88f201eb9e4e3b8dbad7",
-      "filename": "static/img/wexin-download-arrow.png"
-    },
-    "static/img/previous_press.png": {
-      "version": "4dfca015a80ee75ffcad8049e839668304d5818d",
-      "filename": "static/img/previous_press.png"
-    },
-    "static/img/authorized-body-bg.png": {
-      "version": "a82bfdf9f537117e6dd14591288cdfbaf654ba7c",
-      "filename": "static/img/authorized-body-bg.png"
-    },
-    "static/img/color.png": {
-      "version": "ca03999e582430bab9979388a7ec17105260855c",
-      "filename": "static/img/color.png"
+    "static/img/home_Show_1@3x.png": {
+      "version": "2d5b838595bf677ab813de098716aae86eab6586",
+      "filename": "static/img/home_Show_1@3x.png"
     },
     "static/js/0.js": {
-      "version": "23d9633adaccdbf102d1e41f1511a9737ab1dc68",
+      "version": "f6d8d8991c40b0d3ce391ec3718269e79ffd371e",
       "filename": "static/js/0.js"
     },
     "static/js/1.js": {
-      "version": "1e97fc6f6db5b56dcc4a54b70dbae478e9d62751",
+      "version": "5963809f8c1ab4bd4baba1a0760ec77d69bac935",
       "filename": "static/js/1.js"
     },
     "static/js/2.js": {
-      "version": "ba059d366bd414124134ebd48223e9acf5d3f9f8",
+      "version": "d81bc107e3ca4ec55805a0c69561558e692a685a",
       "filename": "static/js/2.js"
     },
     "static/js/3.js": {
-      "version": "b4dabecb6adbfc63c7f62cbddc0b7d8a5cce54d2",
+      "version": "1e09341e2792d9c9ca0509b323632b7c94ecf5d2",
       "filename": "static/js/3.js"
     },
     "static/js/4.js": {
-      "version": "b9eaf8739cd834e2dd4c7a9edb5a6c03556a9911",
+      "version": "86035de7354e6949de7550c7ead0d9eb71d56305",
       "filename": "static/js/4.js"
     },
     "static/js/5.js": {
-      "version": "8703a4dbd393f9f32fd9e0843a02693c9e877b1c",
+      "version": "ac7d78c22d6b4eeddb33bd83a78f891313d0c36a",
       "filename": "static/js/5.js"
     },
     "static/js/6.js": {
-      "version": "d1390add90f9bc922b39eeb1968c017ad19c3d67",
+      "version": "2fbd64be951cde056f7e48a445e4e15b413feddb",
       "filename": "static/js/6.js"
     },
     "static/js/7.js": {
-      "version": "17f56f4670ac276fe03f93b125fe544fbe2a7417",
+      "version": "0413e3f6e69210b065e766389c46839f664610f2",
       "filename": "static/js/7.js"
     },
-    "static/js/8.js": {
-      "version": "6238aea05e7db2ef3fae8549d9f093643e765c2a",
-      "filename": "static/js/8.js"
-    },
-    "static/js/9.js": {
-      "version": "c1c4953d138a07ee4e6e43da7152fa4c18362e0b",
-      "filename": "static/js/9.js"
-    },
-    "static/js/10.js": {
-      "version": "5121f64f434820a466f572acffd9f29dd3319133",
-      "filename": "static/js/10.js"
-    },
-    "static/js/11.js": {
-      "version": "0d683a4240c34708bfe75adf446f61d70f89fbe8",
-      "filename": "static/js/11.js"
-    },
-    "static/js/12.js": {
-      "version": "76e1e9d07590c389f1f81d6cb50aa60ead7b84c2",
-      "filename": "static/js/12.js"
-    },
-    "static/js/13.js": {
-      "version": "3e465cb66c0c53b93e57d5389c454a490c197fd4",
-      "filename": "static/js/13.js"
-    },
-    "static/js/14.js": {
-      "version": "63b5cf0fec2fca6d6856086196abd71f6465168a",
-      "filename": "static/js/14.js"
-    },
-    "static/js/15.js": {
-      "version": "228e43db845969402f07f34817adc5b1b7dcd219",
-      "filename": "static/js/15.js"
-    },
-    "static/js/16.js": {
-      "version": "b6c5f7ba3607bd21fa7902701510231798e63a02",
-      "filename": "static/js/16.js"
-    },
-    "static/js/17.js": {
-      "version": "17822f2ccf96cd427fa7b5fc3ac37d259a56c43e",
-      "filename": "static/js/17.js"
-    },
-    "static/js/18.js": {
-      "version": "47483e98eeac2b32167a2c2b40306c1a3ed02228",
-      "filename": "static/js/18.js"
-    },
-    "static/js/19.js": {
-      "version": "239bf6f02b143acec37bdd6ea5b184c9305f7160",
-      "filename": "static/js/19.js"
-    },
-    "static/js/20.js": {
-      "version": "1803d5e3a0119e0381efba2ebdef87e4a1122dec",
-      "filename": "static/js/20.js"
-    },
-    "static/js/21.js": {
-      "version": "6ede1890b6cfc2f5101e682bb8c801ce384040c6",
-      "filename": "static/js/21.js"
-    },
-    "static/js/22.js": {
-      "version": "9e6e2968444c37067d3bb2e7b594357fcb49bce0",
-      "filename": "static/js/22.js"
-    },
-    "static/js/23.js": {
-      "version": "2958563cdb63b30c1a3834bfcc5dc8d421499eea",
-      "filename": "static/js/23.js"
-    },
     "static/js/vendor.js": {
-      "version": "02ed746751b5d990df7a9135073d1bbed96c2062",
+      "version": "4d5153ca0d7e32d52cb0ec1fcd06c9e7a0f074c8",
       "filename": "static/js/vendor.js"
     },
     "static/js/app.js": {
-      "version": "d7a98b6595a5ef3ecaa4c15dc43718cea267084f",
+      "version": "f32a32fe1d8e0eee1a243fffab411928f30501fd",
       "filename": "static/js/app.js"
     },
     "static/js/manifest.js": {
-      "version": "5efc8aef0e5fa08b24eaf06db8359bc75914a625",
+      "version": "88c5c70b30a2ad5c5628d0065085ef9829cb1d3a",
       "filename": "static/js/manifest.js"
     },
     "static/css/app.css": {
-      "version": "b8cda337043930f1305a22f134adc1cf2c61a075",
+      "version": "d590df999133894c06816d7d09d2321e1de16585",
       "filename": "static/css/app.css"
     },
     "index.html": {
-      "version": "a7c81b778c2aff802c629af751d2657dcc725f2a",
+      "version": "cd1637b0a5d6506e02bc5670977d287b7b89b655",
       "filename": "index.html"
     }
   },
@@ -219,5 +95,5 @@
     "static/js/vendor.js",
     "static/js/app.js"
   ],
-  "version": "181605b530f12f0f9a844e4e0d80cbf4b195c3dc"
+  "version": "ac99b09acf0823fe75e923099fd3c1acb73eb3cb"
 }
