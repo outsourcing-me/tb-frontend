@@ -6,13 +6,14 @@ import { read, save } from '@/storage'
 import { RET_CODE_MAP } from '@/constants.js'
 import moment from 'moment'
 import i18n from '@/i18n'
+// import MessageBox from '@/common/custom_msgbox.js'
 import MessageBox from '@/common/custom_msgbox.js'
 
 const msgBox = function(message) {
   MessageBox({
-    title: i18n.t('global.msgBox.title'),
-    message,
-    confirmButtonText: i18n.t('global.msgBox.confirmButtonText')
+    // title: i18n.t('global.msgBox.title'),
+    message
+    // confirmButtonText: i18n.t('global.msgBox.confirmButtonText')
   })
 }
 // import msgBox from '@/common/custom_msgbox.js'
@@ -56,7 +57,8 @@ export default [
         request.abort()
       }, request._timeout)
     }
-    if (request._showLoadingStatus) { // 是否显示loading状态
+
+    if (request.params._showLoadingStatus === undefined && request._showLoadingStatus) { // 是否显示loading状态
       Indicator.open({ spinnerType: 'double-bounce' })
       clearTimeout(indicatorHandle)
     }

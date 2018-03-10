@@ -3,12 +3,13 @@ import Vuex from 'vuex'
 import mutations from '@/store/mutations'
 import getters from '@/store/getters'
 import actions from '@/store/actions'
-import { user, token } from '@/stored.js'
+import { user, token, soundSwitch } from '@/stored.js'
 import 'core-js/fn/promise' // for vuex
 
 const state = {
   user: JSON.parse(user || '{}') || {}, // 很奇怪，JSON.parse(user || '{}')结果竟然是null
   loadingSuccess: false,
+  soundSwitch: soundSwitch || 'on',
   now: new Date(),
   updaterProgressValue: 0,
   updaterProgressVisible: false,

@@ -7,6 +7,10 @@ export default {
     return state.token
   },
 
+  soundSwitch(state) {
+    return state.soundSwitch
+  },
+
   now(state) {
     return state.now
   },

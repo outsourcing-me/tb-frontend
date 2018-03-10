@@ -17,7 +17,7 @@ export default {
       assetUint: 'coins'
     },
     rechargeCards: {
-      cardTitle: 'full ¥ {cost}',
+      cardTitle: 'full ₹ {cost}',
       cardDesc: 'Send {coins}',
       cardFooter: '{cost} Coins'
     }

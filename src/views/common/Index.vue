@@ -4,7 +4,7 @@
       .icon.ic_title_my.mlr10.mt5(slot="left", @click="$router.push({name: 'mine'})")
       .flex.mrr10.mt5(slot="right")
         .icon.ic_game_Message.mrr5(@click="showContact")
-        .icon.ic_title_Sound_off(v-if="soundOn", @click="toggleSound('off')")
+        .icon.ic_title_Sound_off(v-if="soundSwitch === 'on'", @click="toggleSound('off')")
         .icon.ic_title_Sound_on(v-else, @click="toggleSound('on')")
     .body.overflow-scroll(ref="body")
       .banner(:style="bannerStyle", disable-swipe)
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import { roomList, bannerList } from '@/common/resources.js'
 import msgBox from '@/common/custom_msgbox.js'
 
@@ -63,9 +63,11 @@ export default {
   },
 
   methods: {
+    ...mapActions(['updateSoundSwitch']),
     toggleSound(action) {
       console.log(action)
-      this.soundOn = action === 'on'
+      this.updateSoundSwitch(action)
+      // this.soundSwitch = action === 'on'
     },
 
     showContact() {
@@ -81,12 +83,11 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user', 'soundSwitch'])
   },
 
   data() {
     return {
-      soundOn: false,
       roomList: [],
       bannerList: [],
       bannerStyle: {},

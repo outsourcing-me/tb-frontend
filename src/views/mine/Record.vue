@@ -40,10 +40,16 @@ export default {
     number: Number,
     async _fetchData() {
       this.loading = true
-      const res = await coinLog.save().then(res => res.json())
+      const res = await coinLog.save({ lastid: this.lastid }).then(res => res.json())
       this.recordList = this.recordList.concat(res.data.list)
-      if (this.recordList.length < 9) this.loading = false
-      else this.noMoreData = true
+
+      if (res.data.list) {
+        this.loading = false
+        const lastRecord = res.data.list.pop()
+        this.lastid = lastRecord.id || this.lastid
+      } else {
+        this.noMoreData = true
+      }
     },
 
     loadMore: debounce(function() {
@@ -55,6 +61,7 @@ export default {
 
   data() {
     return {
+      lastid: null,
       user: this.$store.getters.user,
       loading: false,
       noMoreData: false,

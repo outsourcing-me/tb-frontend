@@ -5,6 +5,7 @@ import {
   STORE_KEY_USER,
   STORE_KEY_ACCESS_TOKEN,
   RET_CODE_MAP,
+  SOUND_SWITCH,
   STORE_KEY_LAST_LOGINED_PHONE
 } from '@/constants'
 // import { each } from 'lodash'
@@ -13,6 +14,11 @@ export default {
   updateUser: function({ commit }, user = {}) {
     Storage.save(STORE_KEY_USER, JSON.stringify(user))
     commit('updateUser', user)
+  },
+
+  updateSoundSwitch({ commit }, soundSwitch = '') {
+    Storage.save(SOUND_SWITCH, soundSwitch)
+    commit('updateSoundSwitch', soundSwitch)
   },
 
   updateToken({ commit }, token = '') {

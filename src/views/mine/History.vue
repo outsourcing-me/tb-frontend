@@ -8,11 +8,11 @@
       .banner(:style="bannerStyle", disable-swipe)
         img.banner-img(src="~assets/images/coin_bg@3x.png")
         .title {{$t('mine.assets.myAssets')}}
-        .sub-title <em>20</em> {{$t('mine.assets.assetUint')}}
+        .sub-title <em>{{user.assets}}</em> {{$t('mine.assets.assetUint')}}
       .cells(v-infinite-scroll="loadMore", infinite-scroll-disabled="loading", infinite-scroll-distance="10")
         tb-empty(v-if="!historyList.length")
-        tb-cell(v-for="item in historyList", :title="item.name", :label="item.date | moment('YYYY-MM-DD HH:mm:ss')")
-          .cell-value(slot="value", :class="{'el-green': item.value < 0, 'el-orange': item.value >= 0}") {{item.value | tbPositveNumber}}
+        tb-cell(v-for="item in historyList", :title="item.title", :label="item.time | moment('YYYY-MM-DD HH:mm:ss')")
+          .cell-value(slot="value", :class="{'el-green': number(item.coin) < 0, 'el-orange': number(item.coin) >= 0}") {{item.coin}}
       .no-more-data(v-if="noMoreData")
         small {{$t('layout.noMoreData')}}
 </template>
@@ -33,6 +33,7 @@ export default {
   },
 
   methods: {
+    number: Number,
     loadMore: debounce(function() {
       if (this.loading) return
 
@@ -51,37 +52,35 @@ export default {
 
   data() {
     return {
+      user: this.$store.getters.user,
       loading: false,
       noMoreData: false,
       bannerStyle: {},
       historyList: [{
-        name: 'Details',
-        date: new Date(),
-        value: 10
+        'id': '1',
+        'title': 'Details',
+        'coin': '+10',
+        'time': '2018-02-10 12:34:00'
       }, {
-        name: 'Clown coin push machine',
-        date: new Date(),
-        value: -20
+        'id': '2',
+        'title': 'Clown coin pushing machine',
+        'coin': '-25',
+        'time': '2018-02-10 12:35:00'
       }, {
-        name: 'Details',
-        date: new Date(),
-        value: 10
+        'id': '3',
+        'title': 'Details',
+        'coin': '+10',
+        'time': '2018-02-10 12:34:00'
       }, {
-        name: 'Details',
-        date: new Date(),
-        value: 10
+        'id': '4',
+        'title': 'Clown coin pushing',
+        'coin': '-10',
+        'time': '2018-02-10 12:34:00'
       }, {
-        name: 'Details',
-        date: new Date(),
-        value: 10
-      }, {
-        name: 'Details',
-        date: new Date(),
-        value: 10
-      }, {
-        name: 'Details',
-        date: new Date(),
-        value: 10
+        'id': '5',
+        'title': 'Details',
+        'coin': '+10',
+        'time': '2018-02-10 12:34:00'
       }]
     }
   }

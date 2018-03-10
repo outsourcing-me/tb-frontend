@@ -18,7 +18,9 @@ const images = [
   require('@/assets/images/ic_empty_tick.png'),
   require('@/assets/images/icon_user.png'),
   require('@/assets/images/icons-retina.png'),
-  require('@/assets/images/profile_bg@3x.png')
+  require('@/assets/images/profile_bg@3x.png'),
+  require('@/assets/images/push-coin.wav'),
+  require('@/assets/images/bullet-fill.wav')
 ]
 
 export default {

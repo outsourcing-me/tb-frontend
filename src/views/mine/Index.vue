@@ -26,7 +26,7 @@
               dd
                 em {{user.history}}
                 | next
-      recharge-cards(:cards="recharges")
+      recharge-cards
 </template>
 
 <script>
@@ -49,32 +49,7 @@ export default {
 
   data() {
     return {
-      avatarSpare: require('@/assets/images/icon_user.png'),
-      recharges: [{
-        cost: 500,
-        coins: 6000
-      }, {
-        cost: 500,
-        coins: 6000
-      }, {
-        cost: 500,
-        coins: 6000
-      }, {
-        cost: 500,
-        coins: 6000
-      }, {
-        cost: 500,
-        coins: 6000
-      }, {
-        cost: 500,
-        coins: 6000
-      }, {
-        cost: 500,
-        coins: 6000
-      }, {
-        cost: 500,
-        coins: 6000
-      }]
+      avatarSpare: require('@/assets/images/icon_user.png')
     }
   }
 }

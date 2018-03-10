@@ -70,7 +70,7 @@ module.exports = {
         }
       }]
     }, {
-      test: /\.(png|jpe?g|gif)(\?.*)?$/,
+      test: /\.(png|jpe?g|gif|wav)(\?.*)?$/,
       loader: 'url-loader',
       query: {
         limit: 1000,

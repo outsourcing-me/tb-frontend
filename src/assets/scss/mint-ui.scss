@@ -7,6 +7,9 @@ body {
     -webkit-overflow-scrolling: touch;
     max-height: 100vh;
   }
+  .mint-msgbox-message {
+    line-height: 25px;
+  }
   .mint-msgbox {
     width: 240px;
     min-height: 255px;

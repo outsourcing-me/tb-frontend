@@ -7,6 +7,14 @@ export default {
     state.user.phone = phone
   },
 
+  updateSoundSwitch(state, soundSwitch) {
+    state.soundSwitch = soundSwitch
+  },
+
+  updateUserAssets(state, assets) {
+    state.user.assets = assets
+  },
+
   updateLoadingSuccess(state, value = false) {
     state.loadingSuccess = value
   },

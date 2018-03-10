@@ -9,7 +9,7 @@
         img.banner-img(src="~assets/images/coin_bg@3x.png")
         .title {{$t('mine.assets.myAssets')}}
         .sub-title <em>20</em> {{$t('mine.assets.assetUint')}}
-      recharge-cards(:cards="recharges")
+      recharge-cards
 </template>
 
 <script>
@@ -33,38 +33,7 @@ export default {
 
   data() {
     return {
-      bannerStyle: {},
-      recharges: [{
-        cost: 500,
-        coins: 6000
-      }, {
-        cost: 500,
-        coins: 6000
-      }, {
-        cost: 500,
-        coins: 6000
-      }, {
-        cost: 500,
-        coins: 6000
-      }, {
-        cost: 500,
-        coins: 6000
-      }, {
-        cost: 500,
-        coins: 6000
-      }, {
-        cost: 500,
-        coins: 6000
-      }, {
-        cost: 500,
-        coins: 6000
-      }, {
-        cost: 500,
-        coins: 6000
-      }, {
-        cost: 500,
-        coins: 6000
-      }]
+      bannerStyle: {}
     }
   }
 }

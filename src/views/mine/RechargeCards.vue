@@ -5,12 +5,14 @@
       .card(v-for="item in currentCards", @click="$router.push({name: 'withdrawal'})")
         .inner
           .body
-            .icon.coin_stack_four
+            .button(:class="{first: item.first}")
+            .icon(:class="item.icon")
             .detail
               .money {{$t('mine.rechargeCards.cardTitle', {cost: item.cost})}}
-              .count {{$t('mine.rechargeCards.cardDesc', {coins: item.coins})}}
+              .count {{$t('mine.rechargeCards.cardDesc', {coins: item.coins})}} coin
           .footer
-            | {{$t('mine.rechargeCards.cardFooter', {cost: numeral(item.cost, '0,0')})}}
+            | {{$t('mine.rechargeCards.cardFooter', {cost: numeral(item.points, '0,0')})}}
+            span.el-orange(v-if="item.special")  + Special Offer
 </template>
 
 <script>
@@ -18,7 +20,59 @@ import Vue from 'vue'
 
 export default {
   props: {
-    cards: Array
+    cards: {
+      type: Array,
+      default () {
+        return [{
+          id: 1,
+          icon: 'coin_stack_four',
+          special: false,
+          first: false,
+          cost: 500,
+          coins: 1000,
+          points: 6000
+        }, {
+          id: 2,
+          icon: 'coin_stack_four',
+          special: false,
+          first: false,
+          cost: 300,
+          coins: 540,
+          points: 3540
+        }, {
+          id: 3,
+          icon: 'coin_stack_four',
+          special: false,
+          first: false,
+          cost: 100,
+          coins: 150,
+          points: 1150
+        }, {
+          id: 4,
+          icon: 'coin_stack_three',
+          special: false,
+          first: false,
+          cost: 50,
+          coins: 65,
+          points: 565
+        }, {
+          id: 5,
+          icon: 'coin_stack_two',
+          special: false,
+          first: true,
+          cost: 20,
+          coins: 100,
+          points: 300
+        }, {
+          id: 6,
+          icon: 'coin_stack_one',
+          special: true,
+          cost: 10,
+          coins: 50,
+          points: 150
+        }]
+      }
+    }
   },
 
   methods: {
@@ -64,6 +118,12 @@ export default {
     color: $minor-font-color;
     padding: 10px;
     font-size: $font-size-xxs;
+    position: relative;
+    .first {
+      position: absolute;
+      right: -1px;
+      top: -1px;
+    }
     .detail {
       margin: 5px 0 0 10px;
     }
@@ -72,11 +132,12 @@ export default {
     }
   }
   .footer {
-    padding: 4px 10px;
+    white-space: nowrap;
+    padding: 4px 0px;
     text-align: center;
     background: black;
     color: white;
-    font-size: $font-size-m;
+    font-size: $font-size-s;
   }
 }
 </style>
