@@ -8,7 +8,8 @@
           img(:src="user.avatar || avatarSpare")
         .name {{user.nick}}
         .id ID: {{user.userid}}
-        .button.button_Withdrawal(@click="$router.push({name: 'withdrawal'})") Withdrawal
+        .button.button_Withdrawal Paytm Recharge
+        //- .button.button_Withdrawal(@click="$router.push({name: 'withdrawal'})") Paytm Recharge
         .detail
           .inner
             dl(@click="$router.push({name: 'assets'})")

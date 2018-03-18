@@ -2,7 +2,7 @@
   section.recharges
     tb-empty(v-if="!currentCards.length")
     .card-list
-      .card(v-for="item in currentCards", @click="$router.push({name: 'withdrawal'})")
+      .card(v-for="item in currentCards")
         .inner
           .body
             .button(:class="{first: item.first}")
@@ -109,7 +109,7 @@ export default {
       overflow: hidden;
       box-shadow: 0px 3px 6px 1px rgba(204, 204, 204, 0.9);
       &:active {
-        opacity: 0.9;
+        opacity: 0.8;
       }
     }
   }
@@ -126,6 +126,7 @@ export default {
     }
     .detail {
       margin: 5px 0 0 10px;
+      white-space: nowrap;
     }
     .money {
       margin-bottom: 5px;

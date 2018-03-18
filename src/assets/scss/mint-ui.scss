@@ -1,7 +1,7 @@
 // ----- 放到body空间下，避免加载顺序导致不生效------
 body {
   .overflow-scroll {
-    overflow: auto;
+    overflow-x: hidden;
     overflow-y: scroll;
     touch-action: pan-y;
     -webkit-overflow-scrolling: touch;

@@ -4,8 +4,8 @@
       .icon.ic_title_my.mlr10.mt5(slot="left", @click="$router.push({name: 'mine'})")
       .flex.mrr10.mt5(slot="right")
         .icon.ic_game_Message.mrr5(@click="showContact")
-        .icon.ic_title_Sound_off(v-if="soundSwitch === 'on'", @click="toggleSound('off')")
-        .icon.ic_title_Sound_on(v-else, @click="toggleSound('on')")
+        .icon.ic_title_Sound_off(v-if="soundSwitch === 'off'", @click="toggleSound('on')")
+        .icon.ic_title_Sound_on(v-else, @click="toggleSound('off')")
     .body.overflow-scroll(ref="body")
       .banner(:style="bannerStyle", disable-swipe)
         .button.Coins(@click="$router.push({name: 'assets'})")
@@ -20,7 +20,7 @@
           .inner
             .pic
               img(:src="room.pic")
-              .status.button.ic_status_icon(:class="room.status").idle {{room.status}}
+              .status.button.ic_status_icon(:class="room.status") {{room.status}}
             .pic-desc
               h3 {{room.name}}
               .note.flex
@@ -51,7 +51,7 @@ export default {
       .save({ userid: this.user.userid })
       .then(res => res.json())
       .then(res => {
-        this.bannerList = res.data.list
+        // this.bannerList = res.data.list
       })
 
     roomList
@@ -89,7 +89,17 @@ export default {
   data() {
     return {
       roomList: [],
-      bannerList: [],
+      bannerList: [{
+        'id': '1',
+        'name': 'Clown coin push',
+        'pic': require('@/assets/images/banner-demo.jpeg'),
+        'jumpurl': ''
+      }, {
+        'id': '2',
+        'name': 'Clown coin push',
+        'pic': require('@/assets/images/banner-demo.jpeg'),
+        'jumpurl': ''
+      }],
       bannerStyle: {},
       selectedProduct: '',
       products: []

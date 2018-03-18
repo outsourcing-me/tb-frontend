@@ -17,7 +17,7 @@ export default function(data = {}, callback) {
   /* eslint-disable no-new */
   return new Vue({
     el: document.createElement('div'),
-    template: `<tb-msgbox ref="msgBox"  :msgbox-class="classes" :showCancelButton="false">
+    template: `<tb-msgbox ref="msgBox" @msgbox-close="handleClose"  :msgbox-class="classes" :showCancelButton="false">
                 <h3 slot="title" v-html="title"></h3>
                 <div class="flex flex-down" v-html="message" style="min-height: 150px;">
                 </div>
@@ -34,6 +34,10 @@ export default function(data = {}, callback) {
         confirmButtonText: i18n.t('global.msgBox.confirmButtonText')
       }, data)
     },
+    methods: {
+      handleClose(action) { this.$emit('msgbox-close', action) }
+    },
+
     mounted() {
       document.body.appendChild(this.$el)
       this.$refs.msgBox.open(action => {

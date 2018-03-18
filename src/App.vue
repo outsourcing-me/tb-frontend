@@ -78,7 +78,7 @@ export default {
 </script>
 
 <style lang="scss">
-// @import '~assets/fonts/franklin/franklin.css';
+@import '~assets/fonts/comicsans/ComicSansMS3.css';
 // @import '~assets/fonts/fz/FZZZHONGHJW.css';
 @import '~assets/scss/base.scss';
 @import '~assets/scss/common.scss';
@@ -110,7 +110,7 @@ body {
     background-size: 100%;
     background-repeat: no-repeat;
   }
-  &.withdrawal, &.loading {
+  &.withdrawal, &.loading, &.index {
     background-color: rgb(248, 248, 248);
   }
 }

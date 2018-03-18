@@ -1,10 +1,10 @@
 <template lang="pug">
   section.game
-    tb-header(ref="header", :fixed="true")
+    tb-header.room-header(ref="header", :fixed="true", :class="status")
       .icon.ic_title_menu_Up_tn.mlr10.mt15(slot="left", @click="back()")
       .flex.mrr10.mt15(slot="right", v-if="status === 'playing'")
-        .icon.ic_title_Sound_off(v-if="soundSwitch === 'on'", @click="toggleSound('off')")
-        .icon.ic_title_Sound_on(v-else, @click="toggleSound('on')")
+        .icon.ic_title_Sound_off(v-if="soundSwitch === 'off'", @click="toggleSound('on')")
+        .icon.ic_title_Sound_on(v-else, @click="toggleSound('off')")
     .body.overflow-scroll(ref="body")
       .coins(v-show="status === 'playing'")
         //- 赢币数量提示
@@ -105,8 +105,10 @@ export default {
 
   mounted() {
     this.loopDataBegin()
-    this.audioPushCoin = new Audio(require('@/assets/images/push-coin.wav'))
-    this.audioFillBullet = new Audio(require('@/assets/images/bullet-fill.wav'))
+    this.audioPushCoin = new Audio(require('@/assets/images/push-coin.mp3'))
+    this.audioFillBullet = new Audio(require('@/assets/images/bullet-fill.mp3'))
+    this.audioFillBullet.loop = false
+    this.audioPushCoin.loop = false
   },
 
   beforeDesdroy() {
@@ -118,7 +120,7 @@ export default {
     ...mapActions(['updateSoundSwitch']),
     back() {
       if (this.status === 'watching') {
-        this.routerBack()
+        this.$router.push({ name: 'index' })
         return
       }
 
@@ -131,7 +133,8 @@ export default {
       })
     },
 
-    beginPlay() {
+    async beginPlay() {
+      await this.noCoinsTip()
       this.status = 'playing'
       this.$nextTick(() => {
         this.countdownStart()
@@ -167,6 +170,7 @@ export default {
 
     playAudio(type) {
       if (this.soundOn && this[type]) {
+        console.log(this[type])
         this[type].play()
       }
     },
@@ -215,7 +219,7 @@ export default {
           this.countdown.shiWei = numberResolved[0]
           this.countdown.geWei = numberResolved[1]
         } else {
-          this.countdownStop()
+          // this.countdownStop()
           this.endPlay()
         }
       }, 1000)
@@ -256,12 +260,38 @@ export default {
       })
     },
 
+    // 无币提示
+    noCoinsTip() {
+      return new Promise((resolve, reject) => {
+        if (this.user.assets < this.price) {
+          // this.$toast(this.$t('common.game.noCoins'))
+          msgBox({
+            message: `
+          <div class="button nothing"></div>
+          <div>
+            ${this.$t('common.game.noCoins')}
+          </div>
+        `
+          }).$on('msgbox-close', action => {
+            reject(action)
+          })
+        } else {
+          resolve()
+        }
+      })
+    },
+
     // 装弹
-    loadBullet() {
+    async loadBullet() {
       if (this.animateCoins || this.currentBulletCount) {
         this.$toast(this.$t('common.game.loadingBullet'))
         return
       }
+
+      await this.noCoinsTip().catch(action => {
+        this.endPlay()
+        throw new Error('no coins')
+      })
 
       if (this.user.assets < this.price) {
         // this.$toast(this.$t('common.game.noCoins'))
@@ -273,8 +303,10 @@ export default {
           </div>
         `
         }).$on('msgbox-close', action => {
+          console.log('endPlay')
           this.endPlay()
         })
+        return
       }
 
       this.maxBullet = Math.min(6, (this.user.assets / this.price) | 0)
@@ -340,10 +372,25 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.room-header {
+  &.watching {
+    pointer-events: none;
+    .left,
+    .mid,
+    .right {
+      pointer-events: auto;
+    }
+  }
+}
+</style>
+
 <style lang="scss" scoped>
 .demo {
   width: 100%;
 }
+
+
 
 .hidden {
   visibility: hidden;
@@ -389,7 +436,8 @@ export default {
   .ic_status_icon {
     span {
       display: inline-block;
-      @include font-size-xxxs;
+      padding-left: 5px;
+      @include font-size-xxxxs;
     }
   }
   line-height: 22px;
@@ -421,6 +469,9 @@ export default {
   button {
     width: 4em;
     text-align: center;
+    -webkit-appearance: none;
+    background: none;
+    border: none;
     &:active {
       color: $primary-color;
     }

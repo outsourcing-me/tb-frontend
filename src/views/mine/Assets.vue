@@ -8,7 +8,7 @@
       .banner(:style="bannerStyle", disable-swipe)
         img.banner-img(src="~assets/images/coin_bg@3x.png")
         .title {{$t('mine.assets.myAssets')}}
-        .sub-title <em>20</em> {{$t('mine.assets.assetUint')}}
+        .sub-title <em>{{user.assets}}</em> {{$t('mine.assets.assetUint')}}
       recharge-cards
 </template>
 
@@ -33,6 +33,7 @@ export default {
 
   data() {
     return {
+      user: this.$store.getters.user,
       bannerStyle: {}
     }
   }
