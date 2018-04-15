@@ -13,6 +13,10 @@ export default {
       noCoins: 'Has no coins or coins is not enough',
       readyBtn: 'ready',
       pushBtn: 'push',
+      playFailedToast: 'Join game failed',
+      busyToast: 'Someone is playing',
+      joinRoomFailedToast: 'Join room faied',
+      chatSubmitBtnText: 'Send',
       statusPlaying: 'playing',
       statusWatching: 'watching'
     },

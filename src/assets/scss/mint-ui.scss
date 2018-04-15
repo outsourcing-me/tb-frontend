@@ -25,4 +25,14 @@ body {
       opacity: 1;
     }
   }
+  .mint-toast-icon {
+    font-size: 56px;
+    &.mintui-field-error {
+      color: $error-color;
+    }
+    &.icon-warning,
+    &.icon-ku {
+      color: $error-color;
+    }
+  }
 }

@@ -46,7 +46,8 @@
               img(:src="barrage.avatar || avatarSpare")
             .barrage-content {{barrage.content}}
       .live-container
-        img.demo(src="~assets/images/home_Show_1@3x.png")
+        canvas.live-video(ref="videoCanvas")
+        //- img.demo(src="~assets/images/home_Show_1@3x.png")
         //- 奖励提示动画
         .bonus-mask
           .button.ic_start_game_bonus_time(:class="bonusTarget === 'bonusTime' ? 'animate' : ''")
@@ -60,7 +61,7 @@
         .flex-item
           .button.ic_start_game_bg(v-if="status === 'watching'", @click="beginPlay") ready
           .button.ic_start_game_bg(v-else-if="status === 'playing'", @click="pushCoin") push
-        .flex-item.text-right.play-status(@click="showBonusRandom")
+        .flex-item.text-right.play-status
           .button.ic_status_icon(v-if="status === 'watching'")
             span {{$t('common.game.statusWatching')}}
           .button.ic_status_icon.idle(v-else-if="status === 'playing'")
@@ -70,14 +71,16 @@
         form(@submit.prevent="submit")
           .message-input
             input(type="text", v-model="message", ref="messageInput")
-          button 发送
+          button {{$t('common.game.chatSubmitBtnText')}}
 </template>
 
 <script>
 import { each } from 'lodash'
 import msgBox from '@/common/custom_msgbox.js'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-import { roomDetail, roomInfo, chat } from '@/common/resources.js'
+import { roomDetail, roomInfo, chat, enterRoomLog, quitRoomLog, coinUse, coinUseCallback } from '@/common/resources.js'
+import * as coinDozer from '@/vendor/coin_dozer.js'
+import { ROOM_STATUS_MAP } from '@/constants.js'
 
 export default {
   countdownHandle: null,
@@ -92,14 +95,22 @@ export default {
     ])
     next(vm => {
       vm.price = Number(rets[0].data.price)
+      vm.machineRoomId = rets[0].data.machine_roomid
       vm.barrageList = rets[1].data.chat
       vm.playerList = rets[1].data.list
+      enterRoomLog.save({ roomid: to.params.id })
+      vm.enterMachineRoom()
     })
   },
 
   beforeRouteLeave(to, from, next) {
     this.loopDataStop()
     this.countdownStop()
+    coinDozer.quitRoom()
+    quitRoomLog.save({ roomid: this.$route.params.id })
+    if (this.winTotalNum.number) {
+      this.showWinDialog()
+    }
     next()
   },
 
@@ -117,7 +128,7 @@ export default {
 
   methods: {
     ...mapMutations(['updateUserAssets']),
-    ...mapActions(['updateSoundSwitch']),
+    ...mapActions(['updateSoundSwitch', 'getGameToken']),
     back() {
       if (this.status === 'watching') {
         this.$router.push({ name: 'index' })
@@ -133,21 +144,71 @@ export default {
       })
     },
 
-    async beginPlay() {
-      await this.noCoinsTip()
-      this.status = 'playing'
-      this.$nextTick(() => {
-        this.countdownStart()
-        this.loadBullet()
-      })
+    // 进入机器房间
+    async enterMachineRoom() {
+      const _self = this
+      if (!this.gameToken) await this.getGameToken()
+
+      function callback() {}
+      callback.prototype = {
+        // 这个回调貌似不支持
+        onRoomStatusChanged(status, reason) {
+          console.log(ROOM_STATUS_MAP, status, reason)
+        },
+        onPlaySucceed(t) {
+          console.log(t)
+          _self.status = 'playing'
+          _self.$nextTick(() => {
+            _self.countdownStart()
+            _self.loadBullet()
+          })
+        },
+        onPlayFailed(t) {
+          console.log(t)
+          _self.status = 'watching'
+          _self.$toast(_self.$t(`common.game.${t.result_code === 4010 ? 'busyToast' : 'playFailedToast'}`), 'error')
+        },
+        onEarnedCoin(coinCount) {
+          switch (true) { // bonusTime', 'coin', 'cool', 'tripleCoin'
+            case coinCount === 1:
+              _self.showBonus('coin')
+              break
+            case coinCount === 2:
+              _self.showBonus('cool')
+              break
+            case coinCount === 3:
+              _self.showBonus('tripleCoin')
+              break
+            case coinCount > 3:
+              _self.showBonus('bonusTime')
+              break
+            default:
+              _self.showBonus()
+          }
+          _self.showWinTip(coinCount)
+        }
+      }
+
+      const res = coinDozer.joinRoom(this.machineRoomId, this.gameToken, this.$refs.videoCanvas, callback)
+      if (res) {
+        this.$toast(this.$t('common.game.joinRoomFailedToast'), 'error')
+      }
     },
 
+    // 开始游戏
+    async beginPlay() {
+      await this.noCoinsTip()
+      coinDozer.startPlay()
+    },
+
+    // 结束游戏
     endPlay() {
       this.status = 'watching'
       this.countdownStop()
       this.$toast(this.$t('common.game.gameOver'))
     },
 
+    // 更新用户信息
     updatePlayer() {
       return roomInfo.save({ _showLoadingStatus: false }, { roomid: this.$route.params.id }).then(res => res.json())
     },
@@ -156,6 +217,7 @@ export default {
       clearInterval(this.dataHandle)
     },
 
+    // 更新房间用户信息
     loopDataBegin() {
       this.loopDataStop()
       this.updatePlayer().then(res => {
@@ -168,6 +230,7 @@ export default {
       })
     },
 
+    // 播放装弹投币等音效
     playAudio(type) {
       if (this.soundOn && this[type]) {
         console.log(this[type])
@@ -175,21 +238,31 @@ export default {
       }
     },
 
-    pushCoin() {
+    // 投币
+    async pushCoin() {
       if (this.currentBulletCount > 0) {
-        this.currentBulletCount -= 1
-        this.playAudio('audioPushCoin')
-        this.countdownStart()
+        const res = await coinUse.save({ coin: this.price, roomid: this.$route.params.id }).then(res => res.json())
+        if (res.code === this.RET_CODE_MAP.OK) {
+          coinDozer.dropCoin(success => {
+            coinUseCallback.save({ coin: this.price, status: success ? 1 : 2, orderid: res.data.orderid }) // 1 is succeed, 2 is failed
+          })
+          this.currentBulletCount -= 1
+          this.playAudio('audioPushCoin')
+          this.countdownStart()
+        } else {
+          coinUseCallback.save({ coin: this.price, status: 2, orderid: res.data.orderid }) // 1 is succeed, 2 is failed
+        }
       } else {
         this.loadBullet()
       }
     },
 
+    // 是否开启声音
     toggleSound(action) {
-      console.log(action)
       this.updateSoundSwitch(action)
     },
 
+    // 发送聊天内容
     async submit() {
       const res = await chat.save({
         roomid: this.$route.params.id,
@@ -197,17 +270,31 @@ export default {
       }).then(res => res.json())
       this.barrageList = res.data.list
       this.messageInputVisible = false
+      this.message = ''
     },
 
     // 顶部赢得coin提示
-    showWinTip() {
+    showWinTip(coinCount) {
+      if (!coinCount) return
+      this.winTipNum.number = coinCount
+      this.winTipNum.geWei = coinCount % 10
+      this.winTipNum.shiWei = coinCount / 10 | 0
       this.winTipShow = true
+      this._addUpWinCoins()
       this.updateUserAssets(this.user.assets + this.winTipNum.number)
       setTimeout(() => {
         this.winTipShow = false
       }, 1000)
     },
 
+    // 累计所赢金币数
+    _addUpWinCoins() {
+      this.winTotalNum.number += this.winTipNum.number
+      this.winTotalNum.geWei += this.winTipNum.geWei
+      this.winTotalNum.shiWei += this.winTipNum.shiWei
+    },
+
+    // 倒计时开始
     countdownStart() {
       this.countdownStop()
       this.countdown = { number: 30, geWei: 0, shiWei: 3 }
@@ -225,15 +312,16 @@ export default {
       }, 1000)
     },
 
+    // 倒计时停止
     countdownStop() {
       clearInterval(this.countdownHandle)
     },
 
     // 随机展示
-    showBonusRandom() {
-      this.showBonus(['bonusTime', 'coin', 'cool', 'tripleCoin'][Math.random() * 4 | 0])
-      console.log(this.bonusTarget)
-    },
+    // showBonusRandom() {
+    //   this.showBonus(['bonusTime', 'coin', 'cool', 'tripleCoin'][Math.random() * 4 | 0])
+    //   console.log(this.bonusTarget)
+    // },
 
     // 显示奖金弹窗
     showBonus(target = '') {
@@ -244,6 +332,7 @@ export default {
       }, 1500)
     },
 
+    // 弹出框展示一共赢得金币数
     showWinDialog() {
       msgBox({
         title: '<div class="button Ribbon_con"></div>',
@@ -251,12 +340,12 @@ export default {
           <div class="button win"></div>
           <div>
             <div class="icon Coin_icon mr5"></div>
-            <div class="icon number mrr5 ${this.winTipNum.shiWei ? 'n' + this.winTipNum.shiWei : ''}"></div>
-            <div class="icon number ${this.winTipNum.geWei ? 'n' + this.winTipNum.geWei : 'dn'}"></div>
+            <div class="icon number mrr5 ${this.winTotalNum.shiWei ? 'n' + this.winTotalNum.shiWei : ''}"></div>
+            <div class="icon number ${this.winTotalNum.geWei ? 'n' + this.winTotalNum.geWei : 'dn'}"></div>
           </div>
         `
       }).$on('msgbox-close', action => {
-        this.showWinTip()
+        // this.showWinTip()
       })
     },
 
@@ -267,11 +356,11 @@ export default {
           // this.$toast(this.$t('common.game.noCoins'))
           msgBox({
             message: `
-          <div class="button nothing"></div>
-          <div>
-            ${this.$t('common.game.noCoins')}
-          </div>
-        `
+              <div class="button nothing"></div>
+              <div>
+                ${this.$t('common.game.noCoins')}
+              </div>
+            `
           }).$on('msgbox-close', action => {
             reject(action)
           })
@@ -327,6 +416,7 @@ export default {
       }, 1000)
     },
 
+    // 显示聊天输入框
     showMessageInput() {
       this.messageInputVisible = true
       this.$nextTick(() => {
@@ -336,7 +426,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['user', 'soundSwitch']),
+    ...mapGetters(['user', 'soundSwitch', 'gameToken']),
     soundOn() {
       return this.soundSwitch === 'on'
     }
@@ -346,6 +436,7 @@ export default {
     return {
       avatarSpare: require('@/assets/images/icon_user.png'),
       price: 0,
+      machineRoomId: null,
       currentBulletCount: 0,
       maxBullet: 6,
       barrageList: [],
@@ -354,12 +445,17 @@ export default {
       countdown: {
         number: 30,
         geWei: 1,
-        shiWei: 1
+        shiWei: 0
       },
       winTipNum: {
-        number: 11,
-        geWei: 1,
-        shiWei: 1
+        number: 0,
+        geWei: 0,
+        shiWei: 0
+      },
+      winTotalNum: {
+        number: 0,
+        geWei: 0,
+        shiWei: 0
       },
       winTipTranstion: 'slideDownFade',
       winTipShow: false,
@@ -386,11 +482,9 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-.demo {
+.live-video {
   width: 100%;
 }
-
-
 
 .hidden {
   visibility: hidden;
@@ -461,6 +555,7 @@ export default {
   }
   input {
     -webkit-appearance: none;
+    background: none;
     border: 0;
     border-bottom: 1px solid $primary-color;
     height: 30px;

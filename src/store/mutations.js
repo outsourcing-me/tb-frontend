@@ -23,6 +23,10 @@ export default {
     state.token = token
   },
 
+  updateGameToken(state, token) {
+    state.gameToken = token
+  },
+
   updateNow(state, date) {
     state.now = date
   },

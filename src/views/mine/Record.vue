@@ -40,10 +40,10 @@ export default {
     number: Number,
     async _fetchData() {
       this.loading = true
-      const res = await coinLog.save({ lastid: this.lastid }).then(res => res.json())
+      const res = await coinLog.save({ lastid: this.lastid, limit: 10 }).then(res => res.json())
       this.recordList = this.recordList.concat(res.data.list)
 
-      if (res.data.list) {
+      if (res.data.list && res.data.list.length) {
         this.loading = false
         const lastRecord = res.data.list.pop()
         this.lastid = lastRecord.id || this.lastid

@@ -51,7 +51,7 @@ export default {
       .save({ userid: this.user.userid })
       .then(res => res.json())
       .then(res => {
-        // this.bannerList = res.data.list
+        this.bannerList = res.data.list
       })
 
     roomList
@@ -89,17 +89,7 @@ export default {
   data() {
     return {
       roomList: [],
-      bannerList: [{
-        'id': '1',
-        'name': 'Clown coin push',
-        'pic': require('@/assets/images/banner-demo.jpeg'),
-        'jumpurl': ''
-      }, {
-        'id': '2',
-        'name': 'Clown coin push',
-        'pic': require('@/assets/images/banner-demo.jpeg'),
-        'jumpurl': ''
-      }],
+      bannerList: [],
       bannerStyle: {},
       selectedProduct: '',
       products: []

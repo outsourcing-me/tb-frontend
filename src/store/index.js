@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import mutations from '@/store/mutations'
 import getters from '@/store/getters'
 import actions from '@/store/actions'
-import { user, token, soundSwitch } from '@/stored.js'
+import { user, token, gameToken, soundSwitch } from '@/stored.js'
 import 'core-js/fn/promise' // for vuex
 
 const state = {
@@ -18,7 +18,8 @@ const state = {
   },
   transitionName: 'slideLeftFade', // 路由切换的过渡效果
   isPopStated: false, // 是否是利用了history.back方式跳转的路由，用来控制routerCrumbs
-  token: token
+  token: token,
+  gameToken: gameToken
 }
 
 Vue.use(Vuex)

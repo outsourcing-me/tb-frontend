@@ -78,6 +78,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import url('//at.alicdn.com/t/font_628982_goioqr0uz9a7cik9.css');
 @import '~assets/fonts/comicsans/ComicSansMS3.css';
 // @import '~assets/fonts/fz/FZZZHONGHJW.css';
 @import '~assets/scss/base.scss';

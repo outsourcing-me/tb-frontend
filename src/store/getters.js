@@ -7,6 +7,10 @@ export default {
     return state.token
   },
 
+  gameToken(state) {
+    return state.gameToken
+  },
+
   soundSwitch(state) {
     return state.soundSwitch
   },

@@ -19,6 +19,7 @@
 
 <script>
 import { debounce } from 'lodash'
+import { coinUseLog } from '@/common/resources.js'
 
 export default {
   created() {
@@ -34,20 +35,26 @@ export default {
 
   methods: {
     number: Number,
-    loadMore: debounce(function() {
-      if (this.loading) return
-
+    async _fetchData() {
       this.loading = true
-      setTimeout(() => {
-        this.historyList.push({
-          name: 'test',
-          date: new Date(),
-          value: 100
-        })
-        if (this.historyList.length < 10) this.loading = false
-        else this.noMoreData = true
-      }, 1000)
+      const res = await coinUseLog.save({ lastid: this.lastid, limit: 10 }).then(res => res.json())
+      this.historyList = this.historyList.concat(res.data.list)
+
+      if (res.data.list && res.data.list.length) {
+        this.loading = false
+        const lastRecord = res.data.list.pop()
+        this.lastid = lastRecord.id || this.lastid
+      } else {
+        this.noMoreData = true
+      }
+    },
+
+    loadMore: debounce(function() {
+      console.log('loading')
+      if (this.loading) return
+      this._fetchData()
     }, 500)
+
   },
 
   data() {
@@ -56,32 +63,7 @@ export default {
       loading: false,
       noMoreData: false,
       bannerStyle: {},
-      historyList: [{
-        'id': '1',
-        'title': 'Details',
-        'coin': '+10',
-        'time': '2018-02-10 12:34:00'
-      }, {
-        'id': '2',
-        'title': 'Clown coin pushing machine',
-        'coin': '-25',
-        'time': '2018-02-10 12:35:00'
-      }, {
-        'id': '3',
-        'title': 'Details',
-        'coin': '+10',
-        'time': '2018-02-10 12:34:00'
-      }, {
-        'id': '4',
-        'title': 'Clown coin pushing',
-        'coin': '-10',
-        'time': '2018-02-10 12:34:00'
-      }, {
-        'id': '5',
-        'title': 'Details',
-        'coin': '+10',
-        'time': '2018-02-10 12:34:00'
-      }]
+      historyList: []
     }
   }
 }
