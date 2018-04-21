@@ -11,7 +11,7 @@ export default {
     state.soundSwitch = soundSwitch
   },
 
-  updateUserAssets(state, assets) {
+  updateUserAssets(state, assets = 0) {
     state.user.assets = assets
   },
 

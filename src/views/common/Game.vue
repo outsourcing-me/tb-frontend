@@ -78,7 +78,7 @@
 import { each } from 'lodash'
 import msgBox from '@/common/custom_msgbox.js'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-import { roomDetail, roomInfo, chat, enterRoomLog, quitRoomLog, coinUse, coinUseCallback } from '@/common/resources.js'
+import { roomDetail, roomInfo, coinAssets, chat, enterRoomLog, quitRoomLog, coinUse, coinUseCallback } from '@/common/resources.js'
 import * as coinDozer from '@/vendor/coin_dozer.js'
 import { ROOM_STATUS_MAP } from '@/constants.js'
 
@@ -91,13 +91,15 @@ export default {
   async beforeRouteEnter(to, from, next) {
     const rets = await Promise.all([
       roomDetail.save({ roomid: to.params.id }).then(res => res.json()),
-      roomInfo.save({ roomid: to.params.id }).then(res => res.json())
+      roomInfo.save({ roomid: to.params.id }).then(res => res.json()),
+      coinAssets.save().then(res => res.json())
     ])
     next(vm => {
       vm.price = Number(rets[0].data.price)
       vm.machineRoomId = rets[0].data.machine_roomid
       vm.barrageList = rets[1].data.chat
       vm.playerList = rets[1].data.list
+      vm.updateUserAssets(rets[2].data.coin)
       enterRoomLog.save({ roomid: to.params.id })
       vm.enterMachineRoom()
     })
@@ -156,7 +158,7 @@ export default {
           console.log(ROOM_STATUS_MAP, status, reason)
         },
         onPlaySucceed(t) {
-          console.log(t)
+          console.log('play success', t)
           _self.status = 'playing'
           _self.$nextTick(() => {
             _self.countdownStart()
@@ -164,11 +166,12 @@ export default {
           })
         },
         onPlayFailed(t) {
-          console.log(t)
+          console.log('play failed', t)
           _self.status = 'watching'
           _self.$toast(_self.$t(`common.game.${t.result_code === 4010 ? 'busyToast' : 'playFailedToast'}`), 'error')
         },
         onEarnedCoin(coinCount) {
+          console.log('earned coins: ', coinCount)
           switch (true) { // bonusTime', 'coin', 'cool', 'tripleCoin'
             case coinCount === 1:
               _self.showBonus('coin')
@@ -213,6 +216,7 @@ export default {
       return roomInfo.save({ _showLoadingStatus: false }, { roomid: this.$route.params.id }).then(res => res.json())
     },
 
+    // 停止更新房间玩家信息
     loopDataStop() {
       clearInterval(this.dataHandle)
     },
@@ -233,7 +237,7 @@ export default {
     // 播放装弹投币等音效
     playAudio(type) {
       if (this.soundOn && this[type]) {
-        console.log(this[type])
+        // console.log(this[type])
         this[type].play()
       }
     },
@@ -299,7 +303,7 @@ export default {
       this.countdownStop()
       this.countdown = { number: 30, geWei: 0, shiWei: 3 }
       this.countdownHandle = setInterval(() => {
-        console.log('countdown running', this.countdown)
+        // console.log('countdown running', this.countdown)
         if (this.countdown.number > 0) {
           this.countdown.number -= 1
           const numberResolved = this.countdown.number.toString().split('')
@@ -524,6 +528,11 @@ export default {
 
 .footer {
   height: 106px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 998;
 }
 
 .play-status {
@@ -541,9 +550,10 @@ export default {
 .fixed-message {
   position: fixed;
   z-index: 999;
-  bottom: 5px;
+  bottom: 0;
   left: 0;
   right: 0;
+  background: white;
   form {
     display: flex;
     align-items: center;

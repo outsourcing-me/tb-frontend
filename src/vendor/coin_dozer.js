@@ -133,7 +133,8 @@ function quitRoom() {
 }
 
 function dropCoin(callback) {
-  seq_num += 1, bev = {
+  seq_num += 1;
+  var bev = {
     sequence: seq_num,
     action: "put"
   };
@@ -450,7 +451,7 @@ var CKPlayer = {
       this.start()
     }.bind(this), 1e3 * this.reconnectInterval))
   }, t.prototype.onMessage = function(t) {
-    console.log('socketmessage', t)
+    // console.log('socketmessage', t)
     this.destination && this.destination.write(t.data)
   }, t
 }(), CKPlayer.Demuxer.TS = function() {

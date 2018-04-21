@@ -31,6 +31,7 @@ router.beforeEach(async(to, from, next) => {
     if (!token) {
       nextAsync({ name: 'login', query: { redirect: to.fullPath } })
     } else if (to.name !== 'loading' && !loadingSuccess) {
+      await store.dispatch('getUser')
       nextAsync({ name: 'loading', query: { replace: true, redirect: to.fullPath } })
     } else if (user.userid) {
       nextAsync()

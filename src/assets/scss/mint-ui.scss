@@ -2,7 +2,7 @@
 body {
   .overflow-scroll {
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     touch-action: pan-y;
     -webkit-overflow-scrolling: touch;
     max-height: 100vh;

@@ -129,20 +129,20 @@ export default [
         if (request.params.skipAuth) {
           store.dispatch('logout', true)
         } else {
-          msgBox(res.body.message || i18n.t('global.401'))
+          msgBox(res.body.msg || i18n.t('global.401'))
           store.dispatch('logout')
         }
       } else if (res.status === 400) {
-        msgBox(res.body.message || i18n.t('global.400'))
+        msgBox(res.body.msg || i18n.t('global.400'))
       } else if (res.status === 403) {
-        msgBox(res.body.message || i18n.t('global.403'))
+        msgBox(res.body.msg || i18n.t('global.403'))
       } else if (res.status === 404) {
-        msgBox(res.body.message || i18n.t('global.404'))
+        msgBox(res.body.msg || i18n.t('global.404'))
       } else if (res.status === 500 || res.status === 502) {
-        msgBox(res.body.message || i18n.t('global.500'))
+        msgBox(res.body.msg || i18n.t('global.500'))
       } else if (res.status === 200) { // 使用body内的code来执行逻辑，上面的http status 先保留
         if (!request.notApi && !request.params.skipAuth && (!res.body || res.body.code !== RET_CODE_MAP.OK)) {
-          msgBox(res.body.message || i18n.t('global.204'))
+          msgBox(res.body.msg || i18n.t('global.204'))
         } else {
           if (request.cache) { // 缓存需要缓存的接口
             let key = Vue.url(request.url, request.params)

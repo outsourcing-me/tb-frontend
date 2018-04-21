@@ -8,7 +8,7 @@ const commonOpts = {
   // emulateJSON: true,
   before(request) {
     const key = Vue.url(request.url, request.params)
-    console.log('ajax request key is : ', key)
+    // console.log('ajax request key is : ', key)
     if (previousRequestMap[key]) {
       previousRequestMap[key].abort()
     }
@@ -26,8 +26,8 @@ export const login = resource('login', {}, {}, { _showLoadingStatus: true, ...co
 export const userInfo = resource('user/info', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 用户信息
 export const gameToken = resource('user/token', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 获取房间token
 export const coinAssets = resource('user/coin_assets', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 获取余额
-export const coinUse = resource('user/coin_use', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 消耗金币
-export const coinUseCallback = resource('user/coin_use_callback', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 消耗金币回调
+export const coinUse = resource('user/coin_use', {}, {}, { _showLoadingStatus: false, ...commonOpts }) // 消耗金币
+export const coinUseCallback = resource('user/coin_use_callback', {}, {}, { _showLoadingStatus: false, ...commonOpts }) // 消耗金币回调
 export const coinLog = resource('user/coin_log', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 提现记录
 export const coinUseLog = resource('user/coin_use_log', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 消耗中奖记录
 export const roomList = resource('room/list', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 房间列表
