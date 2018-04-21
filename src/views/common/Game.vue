@@ -140,8 +140,9 @@ export default {
       msgBox({
         message: this.$t('common.game.exitMessage')
       }).$on('msgbox-close', action => {
+        console.log(action)
         if (action === 'confirm') {
-          this.$routerBack()
+          this.$router.push({ name: 'index' })
         }
       })
     },
